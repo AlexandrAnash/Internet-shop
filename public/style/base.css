@@ -1,0 +1,75 @@
+.products img{
+    width: 100px;
+}
+
+.products {
+    border: 2px solid #000000;
+    list-style: none;
+    display: inline-block;
+    width: 300px;
+    margin: 10px 10px;
+    padding: 10px 10px;
+}
+
+.products div {
+    float: left;
+}
+
+.special {
+    border-bottom: 2px solid red;
+    color: #003399;
+    font-size: 20px;
+}
+
+.reviews {
+    border: 2px solid #953b39;
+    width: 310px;
+    margin: 10px 10px;
+    padding: 10px 10px;
+}
+
+.review {
+    border: 2px solid #000000;
+    list-style: none;
+    width: 300px;
+
+}
+
+.name {
+    font-size: 20px;
+    display: block;
+        margin: 10px 0px;
+}
+
+.value {
+    font-size: 18px;
+    margin-left: 10px;
+}
+#valueRating {
+    color: blue;
+}
+
+#productID {
+    color: red;
+}
+
+.login {
+
+    float: right;
+    font-size: 0.8em;
+}
+
+.login_register {
+    text-align: center;
+}
+a {
+    text-decoration: none;
+}
+
+.tableOrders {
+    text-align: left;
+
+}
+.tableOrders th, td {
+    padding-right: 30px;
+}

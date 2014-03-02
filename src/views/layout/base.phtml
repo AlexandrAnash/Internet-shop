@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/style/base.css">
+    <title>Student Webstore</title>
+</head>
+<body>
+<?php if(!isset($_SESSION)): ?>
+    <?php session_start(); ?>
+<?php endif; ?>
+<?php if(!isset($_SESSION["userId"]) && !isset($_SESSION["adminId"])): ?>
+    <div class="login">
+        <a href="?page=quote_list">curt</a> |
+        <a href="?page=customer_login">Login</a> |
+        <a href="?page=customer_register">Sign Up</a>
+    </div>
+    <h3>Hello, please log in! </h3>
+<?php else: ?>
+    <?php if(isset($_SESSION["adminId"])): ?>
+        <div class="login">
+            <a href="?page=admin_orders">Orders</a> |
+            <a href="?page=admin_logout">Logout</a>
+        </div>
+        <?php else: ?>
+        <div class="login">
+            <a href="?page=quote_list">Curt</a> |
+            <a href="?page=customer_logout">Logout</a>
+        </div>
+        <?php endif; ?>
+
+
+    <h3>Good!!! Hello <?php echo($_SESSION["userName"]) ?> </h3>
+<?php endif; ?>
+
+<div class="page-content">
+    <?php $this->renderTemplate() ?>
+</div>
+</body>
+</html>
