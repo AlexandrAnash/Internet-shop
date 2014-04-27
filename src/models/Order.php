@@ -128,7 +128,7 @@ class Order extends Entity
         $this->_data['status'] = $data;
     }
 
-    public function sendEmail()
+    public function sendEmail($dist)
     {
 
         $messageContent = "";
@@ -149,14 +149,19 @@ class Order extends Entity
 
         $messageContent .= "Products: <br>";
         $messageContent .= '<div style="margin-left: 50px">';
-        foreach ($this->_OPCollection as $product)
+        foreach ($this->_OPCollection as $key => $product)
         {
             $messageContent .= "---------------------------------------<br>";
             $messageContent .= 'Name - ' . $product->getProductName() . '<br>';
             $messageContent .= 'Sku - ' . $product->getProductSku() . '<br>';
-           $messageContent .= 'Count - ' . $product->getProductQty() . '<br>';
-           $messageContent .= 'Price - ' . $product->getProductPrice() . '<br>';
+            $messageContent .= 'Count - ' . $product->getProductQty() . '<br>';
+            $messageContent .= 'Price - ' . $product->getProductPrice() . '<br>';
             $messageContent .= "---------------------------------------<br>";
+
+            $messageContent .= "---------------------------------------<br>";
+            $messageContent .= "Minimum shipping time - " . $dist[$key]['duration'] . '<br>';
+            $messageContent .= "---------------------------------------<br>";
+
         }
         $messageContent .= "</div>";
 
@@ -186,30 +191,30 @@ class Order extends Entity
 
 
         echo html_entity_decode($messageContent);
-     // $html = new MimePart($messageContent);
-     // $html->type = "text/html";
-     // $body = new MimeMessage();
-     // $body->setParts(array($html));
-     //$message = new Message();
-     //$message->addTo('probnik012@gmail.com')
-     //    ->addFrom('probnik012@gmail.com')
-     //    ->setSubject('Greetings and Salutations!')
-     //    ->setBody($body);
+//      $html = new MimePart($messageContent);
+//      $html->type = "text/html";
+//      $body = new MimeMessage();
+//      $body->setParts(array($html));
+//     $message = new Message();
+//     $message->addTo('probnik012@gmail.com')
+//         ->addFrom('probnik012@gmail.com')
+//         ->setSubject('Greetings and Salutations!')
+//         ->setBody($body);
 //
-     //$transport = new SmtpTransport();
-     //$options   = new SmtpOptions(array(
-     //    'name'              => 'localhost.localdomain',
-     //    'host'              => 'smtp.gmail.com',
-     //    'port'              => '587',
-     //    'connection_class'  => 'login',
-     //    'connection_config' => array(
-     //        'username' => 'probnik012@gmail.com',
-     //        'password' => 'probnik123qweasd',
-     //        'ssl' => 'tls'
-     //    ),
-     //));
-     //$transport->setOptions($options);
-     //$transport->send($message);
+//     $transport = new SmtpTransport();
+//     $options   = new SmtpOptions(array(
+//         'name'              => 'localhost.localdomain',
+//         'host'              => 'smtp.gmail.com',
+//         'port'              => '587',
+//         'connection_class'  => 'login',
+//         'connection_config' => array(
+//             'username' => 'probnik012@gmail.com',
+//             'password' => 'probnik123qweasd',
+//             'ssl' => 'tls'
+//         ),
+//     ));
+//     $transport->setOptions($options);
+//     $transport->send($message);
 
     }
 

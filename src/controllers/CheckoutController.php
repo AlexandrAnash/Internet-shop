@@ -4,6 +4,10 @@ namespace App\Controller;
 use App\Model\QuoteCollection;
 use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
+use App\Model\Resource\Table\Store as StoreTable;
+use App\Model\Resource\Table\ProductStore as ProductStoreTable;
+use App\Model\Resource\Table\Product as ProductTable;
+
 
 class CheckoutController
     extends SalesController
@@ -85,11 +89,12 @@ class CheckoutController
         $quote->collectTotals();
         $quote->save();
         if ($this->_isPost()) {
+            $dist = $this->optimizationShipping($quote);
             $order = $this->_di->get('Order');
             $order->save();
             $this->_di->get('QuoteConverter')
                 ->toOrder($quote, $order);
-            $order->sendEmail();
+            $order->sendEmail($dist);
             $order->save();
         } else {
             return $this->_di->get('View', [
@@ -103,5 +108,82 @@ class CheckoutController
 
         }
     }
+
+    private function optimizationShipping($quote)
+    {
+
+        $resourceProductStore = $this->_di->get('ResourceCollection', ['table' => new ProductStoreTable]);
+        $productStores = $this->_di->get('ProductStoreCollection', ['resource' => $resourceProductStore]);
+
+        $distanceGoogle = $this->getDistanseClientToStoresGoogle($quote->getAddress());
+        $distance = [];
+        $returnDistance = [];
+        foreach ($distanceGoogle as $key => $row)
+        {
+            $distance[$key] = $row['distance'];
+        }
+        array_multisort($distance, SORT_ASC, $distanceGoogle);
+        $count = [];
+        foreach ($quote->getItems() as $q) {
+            array_push($count, $q->getQty());
+        }
+        echo '<pre>';
+        var_dump($count);
+        echo '</pre>';
+
+        foreach ($distanceGoogle as $dg) {
+            echo "distanceGoogle";
+            foreach ($quote->getItems() as $key => $q) {
+                $product = $this->_di->get('Product');
+                $product->load($q->getProductId());
+                if ($count[$key] != 0) {
+                    foreach ($productStores as $ps) {
+                        if ($ps->getSku() == $product->getSku() && $ps->getStoreId() == $dg["store"]->getId()) {
+                            if ($ps->getQty() != 0) {
+                                echo '<pre>';
+                                var_dump($ps);
+                                echo '</pre>';
+                                if ($ps->getQty() > $count[$key]) {
+                                    echo "-----------1------------";
+                                    $count[$key]= 0;
+                                    $ps->setQty($ps->getQty() - $q->getQty());
+                                    $this->savePStore($ps);
+                                    $returnDistance[] = $dg;
+                                } else {
+                                    if ($ps->getQty() == $count[$key]) {
+                                        echo "-----------2------------";
+                                        $count[$key] = $ps->getQty() - $count[$key];
+                                        $ps->setQty($ps->getQty() - $q->getQty());
+                                        $this->savePStore($ps);
+                                        $returnDistance[] = $dg;
+                                    } else {
+                                        echo "-----------3------------";
+                                        $count[$key] = $count[$key] - $ps->getQty();
+                                        $ps->setQty(0);
+                                        $this->savePStore($ps);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        echo '<pre>';
+//        var_dump($quote->getQty());
+        echo '</pre>';
+        return $returnDistance;
+    }
+
+    private function savePStore($ps) {
+        $PStore = $this->_di->get('ProductStore');
+        $PStore->setStoreId($ps->getStoreId());
+        $PStore->setSku($ps->getSku());
+        $PStore->setQty($ps->getQty());
+        $PStore->setId($ps->getId());
+        $PStore->save();
+    }
+
+
 
 }

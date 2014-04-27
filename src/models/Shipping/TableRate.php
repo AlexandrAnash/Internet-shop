@@ -18,8 +18,7 @@ class TableRate implements IMethod
     public function getPrice()
     {
        $price = $this->_priceTable[$this->_address->getCityId()];
-       return isset($this->_priceTable[$this->_address->getCityId()])
-           ? $this->_priceTable[$this->_address->getCityId()] : null ;
+       return isset($price) ? $price : null ;
     }
 
     public function getCode()

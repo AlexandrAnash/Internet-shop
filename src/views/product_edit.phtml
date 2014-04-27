@@ -1,0 +1,32 @@
+<form action="?page=product_add" method="POST">
+    <input type="text" name="product[product_id]" value="<?php echo($this->get('product')->getId()) ?>" hidden>
+
+    <div>
+        <label>Product name: </label>
+        <input type="text" name="product[name]" value="<?php echo($this->get('product')->getName()) ?>">
+    </div>
+
+    <div>
+        <label>Unique number(sku): </label>
+        <input type="text" name="product[sku]" value="<?php echo($this->get('product')->getSku()) ?>">
+    </div>
+
+    <div>
+        <label>Price: </label>
+        <input type="text" name="product[price]" value="<?php echo($this->get('product')->getPrice()) ?>">
+    </div>
+
+    <div>
+        <label>Special_price: </label>
+        <input type="text" name="product[special_price]" value="<?php echo($this->get('product')->getSpecialPrice()) ?>">
+    </div>
+
+    <div>
+        <label>Load image: </label>
+        <input type="text" name="product[image]" value="<?php echo($this->get('product')->getImage()) ?>">
+    </div>
+
+    <input type="submit" value="Update product"/>
+</form>
+<a href="?page=product_delete&product_id=<?php echo $this->get('product')->getId(); ?>">Delete <?php echo $this->get('product')->getName(); ?></a>
+

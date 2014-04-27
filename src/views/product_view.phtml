@@ -23,6 +23,37 @@
     <input type="text" name="quote[product_id]" value="<?php echo $this->get('product')->getId();?>" hidden>
     <input type="submit" id = "<?php echo $this->get('product')->getId();?>" value="Add quote" />
 </form>
+
+
+<?php if(isset($_SESSION["userId"]) || isset($_SESSION["adminId"])): ?>
+    <form action="?page=product_addReview" method="POST">
+        <div>
+            <label>Name: </label>
+            <input type="text" name="review[name]">
+        </div>
+
+        <div>
+            <label>Email: </label>
+            <input type="text" name="review[email]">
+        </div>
+
+        <div>
+            <label>Text: </label>
+            <textarea rows="10" cols="45" name="review[text]"></textarea>
+        </div>
+
+        <div>
+            <label>Rating: </label>
+            <input type="text" name="review[rating]">
+        </div>
+
+        <input type="text" name="review[product_id]" value="<?php echo $this->get('product')->getId() ?>" hidden>
+        <input type="text" name="review[customer_id]" value="<?php echo $_SESSION["userId"] ?>" hidden>
+
+        <input type="submit" value="Add review"/>
+    </form>
+ <?php endif; ?>
+
 <div class="reviews">
     <h2>Reviews!</h2>
 
@@ -31,21 +62,23 @@
         <a href="/?page=product_view&id=<?php echo $this->get('product')->getId();?>&p=<?php echo $page; ?>"><?php echo $page; ?></a>
     <?php endfor; ?>
     <br>
-<?php foreach ($this->get('reviews') as $_review): ?>
+
+    <?php foreach ($this->get('reviews') as $_review): ?>
 
         <div class="review">
             <span>Product_id: </span>
             <h2 id = 'productID'><?php echo $this->get('product')->getId() ?></h2>
-            <span class="name">Name: </span>
-            <h3><?php echo $_review->getName() ?></h3>
-            <span class="name">E-mail: </span>
-            <span class="value"><?php echo $_review->getEmail() ?></span>
-            <span class="name">Description: </span>
-            <span class="value"><?php echo $_review->getText() ?></span>
-            <span class="name">Rating: </span>
-            <span class="value"><?php echo $_review->getRating() ?></span>
+            <lable>Name: </lable>
+            <h4><?php echo $_review->getName() ?></h4>
+            <lable>E-mail: </lable>
+            <div class="value"><?php echo $_review->getEmail() ?></div>
+            <lable>Description: </lable>
+            <div class="value"><?php echo $_review->getText() ?></div>
+            <lable>Rating: </lable>
+            <div class="value"><?php echo $_review->getRating() ?></div>
         </div>
+        <br>
+        <a href="?page=product_deleteReview&review_id=<?php echo $_review->getId();?>&id=<?php echo $this->get('product')->getId();?>">Delete <?php echo $this->get('product')->getName(); ?></a>
 
-    <br>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 </div>

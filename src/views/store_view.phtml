@@ -1,0 +1,62 @@
+<div class="products">
+    <div>
+        <span>Name: </span>
+        <h2><?php echo $this->get('store')->getName() ?></h2>
+        <span>Address Id: </span>
+        <span><?php echo $this->get('store')->getAddressId() ?></span>
+        <label>City name: </label>
+        <span><?php echo $this->get('city')->getName() ?></span>
+        <label>Postal Code: </label>
+        <span><?php echo $this->get('address')->getPostalCode() ?></span>
+        <label>Street: </label>
+        <span><?php echo $this->get('address')->getStreet() ?></span>
+        <label>Home Number: </label>
+        <span><?php echo $this->get('address')->getHomeNumber() ?></span>
+        <label>Flat: </label>
+        <span><?php echo $this->get('address')->getFlat() ?></span>
+        <br>
+    </div>
+</div>
+
+
+<?php if(isset($_SESSION["userId"]) || isset($_SESSION["adminId"])): ?>
+    <form action="?page=store_addProductStore" method="POST">
+        <div>
+            <label>sku: </label>
+            <input type="text" name="productStore[sku]">
+        </div>
+
+        <div>
+            <label>quantity: </label>
+            <input type="text" name="productStore[qty]">
+        </div>
+
+        <input type="text" name="productStore[store_id]" value="<?php echo $this->get('store')->getId() ?>" hidden>
+
+        <input type="submit" value="Add Product"/>
+    </form>
+ <?php endif; ?>
+
+<div class="reviews">
+    <h2>Products in store!</h2>
+
+    <!--    <h3 id = 'valueRating'>--><?php //echo $reviewsAll->getAverageRating(); ?><!--</h3>-->
+    <?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
+        <a href="/?page=store_view&id=<?php echo $this->get('store')->getId();?>&p=<?php echo $page; ?>"><?php echo $page; ?></a>
+    <?php endfor; ?>
+    <br>
+
+    <?php foreach ($this->get('productStores') as $_product): ?>
+        <div class="review">
+            <lable>Store Id: </lable>
+            <h4><?php echo $_product->getStoreId() ?></h4>
+            <lable>Sku: </lable>
+            <div class="value"><?php echo $_product->getSku() ?></div>
+            <lable>quantity: </lable>
+            <div class="value"><?php echo $_product->getQty() ?></div>
+        </div>
+        <br>
+        <a href="?page=store_deleteProductStore&product_store_id=<?php echo $_product->getId();?>&id=<?php echo $this->get('store')->getId();?>">Delete <?php echo $this->get('store')->getName(); ?></a>
+
+    <?php endforeach; ?>
+</div>

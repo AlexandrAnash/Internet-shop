@@ -1,8 +1,9 @@
-<?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
-    <a href="/?p=<?php echo $page; ?>"><?php echo $page; ?></a>
-<?php endfor; ?>
-<br>
+<script type="text/javascript" src="/javascript/geomap.js"></script>
 
+
+<!--<div id="map_canvas" style="width:500px; height: 500px;"></div>-->
+<!---->
+<!--<div id="outputDiv"></div>-->
 <?php foreach ($this->get('products') as $_product): ?>
 
     <a href="?page=product_view&id=<?php echo $_product->getId(); ?>">
@@ -28,14 +29,50 @@
         </div>
     </a>
     <form action="?page=quote_add" method="POST">
-        <label for="count">count: </label>
+        <label for="count">Available quantity - <?php echo $_product->getQty() ?>: </label>
         <input type="text" name="quote[count]">
         <input type="text" name="quote[product_id]" value="<?php echo $_product->getId() ?>" hidden>
         <input type="submit" value="Add quote"/>
     </form>
+    <a href="?page=product_edit&product_id=<?php echo $_product->getId(); ?>">Update <?php echo $_product->getName(); ?></a>
 
     <br>
 
 <?php endforeach; ?>
+
+
+<form action="?page=product_add" method="POST">
+    <div>
+        <label>Product name: </label>
+        <input type="text" name="product[name]">
+    </div>
+
+    <div>
+        <label>Unique number(sku): </label>
+        <input type="text" name="product[sku]">
+    </div>
+
+    <div>
+        <label>Price: </label>
+        <input type="text" name="product[price]">
+    </div>
+
+    <div>
+        <label>Special_price: </label>
+        <input type="text" name="product[special_price]">
+    </div>
+
+    <div>
+        <label>Load image: </label>
+        <input type="text" name="product[image]">
+    </div>
+
+    <input type="submit" value="Add product"/>
+</form>
+
+<?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
+    <a href="/?p=<?php echo $page; ?>"><?php echo $page; ?></a>
+<?php endfor; ?>
+<br>
 
 

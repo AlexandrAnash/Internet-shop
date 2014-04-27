@@ -11,6 +11,15 @@
     padding: 10px 10px;
 }
 
+.products span {
+    display: block;
+    border: 1px solid #5bc0de;
+    margin-bottom: 5px;
+}
+.products h2 {
+    display: inline-block;
+
+}
 .products div {
     float: left;
 }

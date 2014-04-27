@@ -61,6 +61,24 @@ class DiC
         $this->_im->addAlias('Product', 'App\Model\Product');
     }
 
+    private function _assembleStores()
+    {
+        $this->_im->setParameters('App\Model\StoreCollection', ['table' => 'App\Model\Resource\Table\Store']);
+        $this->_im->addAlias('StoreCollection', 'App\Model\StoreCollection');
+
+        $this->_im->setParameters('App\Model\Store', ['table' => 'App\Model\Resource\Table\Store']);
+        $this->_im->addAlias('Store', 'App\Model\Store');
+    }
+
+    private function _assembleProductStore()
+    {
+        $this->_im->setParameters('App\Model\ProductStoreCollection', ['table' => 'App\Model\Resource\Table\ProductStore']);
+        $this->_im->addAlias('ProductStoreCollection', 'App\Model\ProductStoreCollection');
+
+        $this->_im->setParameters('App\Model\ProductStore', ['table' => 'App\Model\Resource\Table\ProductStore']);
+        $this->_im->addAlias('ProductStore', 'App\Model\ProductStore');
+    }
+
 
     private function _assembleReview()
     {
@@ -101,6 +119,10 @@ class DiC
 
         $this->_im->setParameters('App\Model\CityCollection', ['table' => 'App\Model\Resource\Table\City']);
         $this->_im->addAlias('CityCollection', 'App\Model\CityCollection');
+        $this->_im->setShared('App\Model\CityCollection', false);
+        $this->_im->setShared('App\Model\City', false);
+
+
     }
     private function _assembleRegion()
     {
@@ -140,6 +162,7 @@ class DiC
     {
         $this->_im->setParameters('App\Model\Address', ['table' => 'App\Model\Resource\Table\Address']);
         $this->_im->addAlias('Address', 'App\Model\Address');
+        $this->_im->setShared('App\Model\Address', false);
     }
 
     private function _assembleCollectors()
@@ -214,8 +237,8 @@ class DiC
         ]);
         $this->_im->addAlias('OrderCollection', 'App\Model\OrderCollection');
 
-        //$this->_im->setShared('App\Model\OrderProductCollection', false);
-        //$this->_im->setShared('App\Model\Order', false);
+        $this->_im->setShared('App\Model\OrderProductCollection', false);
+        $this->_im->setShared('App\Model\Order', false);
     }
 
 

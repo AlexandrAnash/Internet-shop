@@ -25,6 +25,7 @@ class Entity {
 
     protected function _getData($key)
     {
+
         return isset($this->_data[$key]) ? $this->_data[$key] : null;
     }
 
@@ -34,8 +35,14 @@ class Entity {
         $this->_data = $data;
         if ($this->_resource && $id) {
             $this->_data[$this->_resource->getPrimaryKeyField()] = $id;
+
         }
 
+    }
+
+    public function remove()
+    {
+        $this->_resource->remove($this->getId());
     }
 
     public function load($id)
