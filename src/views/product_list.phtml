@@ -4,75 +4,77 @@
 <!--<div id="map_canvas" style="width:500px; height: 500px;"></div>-->
 <!---->
 <!--<div id="outputDiv"></div>-->
-<?php foreach ($this->get('products') as $_product): ?>
+<div class="list_content">
+    <div class="row">
+        <?php foreach ($this->get('products') as $_product): ?>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <a href="?page=product_view&id=<?php echo $_product->getId(); ?>">
+                <div class="products">
+                    <div>
+                        <img src="<?php echo $_product->getImage(); ?>"/>
+                    </div>
+                    <div>
+                        <span>Name: </span>
 
-    <a href="?page=product_view&id=<?php echo $_product->getId(); ?>">
-        <div class="products">
-            <div>
-                <img src="<?php echo $_product->getImage(); ?>"/>
-            </div>
-            <div>
-                <span>Name: </span>
-
-                <h2><?php echo $_product->getName() ?></h2>
-                <span>Sku: </span>
-                <span><?php echo $_product->getSku() ?></span>
-                <br>
-                <span>Price: </span>
-                <span><?php echo $_product->getPrice() ?></span>
-                <br>
-                <?php if ($_product->isSpecialPriceApplied()): ?>
-                    <span class="special">Special Price: </span>
-                    <span class="special"><?php echo $_product->getSpecialPrice() ?></span>
-                <?php endif; ?>
-            </div>
+                        <h2><?php echo $_product->getName() ?></h2>
+                        <span>Sku: </span>
+                        <span><?php echo $_product->getSku() ?></span>
+                        <br>
+                        <span>Price: </span>
+                        <span><?php echo $_product->getPrice() ?></span>
+                        <br>
+                        <?php if ($_product->isSpecialPriceApplied()): ?>
+                            <span class="special">Special Price: </span>
+                            <span class="special"><?php echo $_product->getSpecialPrice() ?></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </a>
+            <form action="?page=quote_add" method="POST">
+                <label for="count">Available quantity - <?php echo $_product->getQty() ?>: </label>
+                <input type="text" name="quote[count]">
+                <input type="text" name="quote[product_id]" value="<?php echo $_product->getId() ?>" hidden>
+                <input type="submit" class="btn-info" value="Add quote"/>
+            </form>
+            <a href="?page=product_edit&product_id=<?php echo $_product->getId(); ?>">Update <?php echo $_product->getName(); ?></a>
         </div>
-    </a>
-    <form action="?page=quote_add" method="POST">
-        <label for="count">Available quantity - <?php echo $_product->getQty() ?>: </label>
-        <input type="text" name="quote[count]">
-        <input type="text" name="quote[product_id]" value="<?php echo $_product->getId() ?>" hidden>
-        <input type="submit" value="Add quote"/>
+        <?php endforeach; ?>
+    </div>
+    <div class="row">
+        <?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
+            <a href="/?p=<?php echo $page; ?>"><?php echo $page; ?></a>
+        <?php endfor; ?>
+    </div>
+    <div class="row">
+        <form action="?page=product_add" method="POST">
+            <div>
+            <label>Product name: </label>
+            <input type="text" name="product[name]">
+        </div>
+
+        <div>
+            <label>Unique number(sku): </label>
+            <input type="text" name="product[sku]">
+        </div>
+
+        <div>
+            <label>Price: </label>
+            <input type="text" name="product[price]">
+        </div>
+
+        <div>
+            <label>Special_price: </label>
+            <input type="text" name="product[special_price]">
+        </div>
+
+        <div>
+            <label>Load image: </label>
+            <input type="text" name="product[image]">
+        </div>
+
+        <input type="submit" value="Add product"/>
     </form>
-    <a href="?page=product_edit&product_id=<?php echo $_product->getId(); ?>">Update <?php echo $_product->getName(); ?></a>
-
-    <br>
-
-<?php endforeach; ?>
-
-
-<form action="?page=product_add" method="POST">
-    <div>
-        <label>Product name: </label>
-        <input type="text" name="product[name]">
     </div>
 
-    <div>
-        <label>Unique number(sku): </label>
-        <input type="text" name="product[sku]">
-    </div>
-
-    <div>
-        <label>Price: </label>
-        <input type="text" name="product[price]">
-    </div>
-
-    <div>
-        <label>Special_price: </label>
-        <input type="text" name="product[special_price]">
-    </div>
-
-    <div>
-        <label>Load image: </label>
-        <input type="text" name="product[image]">
-    </div>
-
-    <input type="submit" value="Add product"/>
-</form>
-
-<?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
-    <a href="/?p=<?php echo $page; ?>"><?php echo $page; ?></a>
-<?php endfor; ?>
-<br>
-
+</div>
 

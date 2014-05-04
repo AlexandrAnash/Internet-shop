@@ -26,7 +26,7 @@ class ProductController
         $productObj = $this->_di->get('Product');
 
         $paginator
-            ->setItemCountPerPage(2)
+            ->setItemCountPerPage(6)
             ->setCurrentPageNumber(isset($_GET['p']) ? $_GET['p'] : 1);
         $pages = $paginator->getPages();
 
