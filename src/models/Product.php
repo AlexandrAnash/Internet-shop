@@ -18,6 +18,16 @@ class Product extends Entity
         return $this->_getData('image');
     }
 
+    public function getDescription()
+    {
+        return $this->_getData('description');
+    }
+
+    public function getTypeProduct()
+    {
+        return $this->_getData('type_product');
+    }
+
     public function getPrice()
     {
         return $this->_getData('price');
@@ -56,6 +66,16 @@ class Product extends Entity
     public function setImage($image)
     {
         $this->_data['image'] = $image;
+    }
+
+    public function setDescription($description)
+    {
+        $this->_data['description'] = $description;
+    }
+
+    public function setTypeProduct($type_product)
+    {
+        $this->_data['type_product'] = $type_product;
     }
 
     public function setPrice($price)

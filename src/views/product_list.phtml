@@ -4,76 +4,190 @@
 <!--<div id="map_canvas" style="width:500px; height: 500px;"></div>-->
 <!---->
 <!--<div id="outputDiv"></div>-->
-<div class="list_content">
+<div ng-controller="productListController" class="list_content">
     <div class="row">
-        <?php foreach ($this->get('products') as $_product): ?>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <a href="?page=product_view&id=<?php echo $_product->getId(); ?>">
-                <div class="products">
-                    <div>
-                        <img src="<?php echo $_product->getImage(); ?>"/>
-                    </div>
-                    <div>
-                        <span>Name: </span>
+    <?php foreach ($this->get('products') as $_product): ?>
+        <div ng-show="false" class="hidden" ng-init="loadProducts('<?php echo $_product->getId(); ?>',
+                                                   '<?php echo $_product->getName() ?>',
+                                                    '<?php echo $_product->getImage(); ?>',
+                                                    '<?php echo $_product->getSku() ?>',
+                                                    '<?php echo $_product->getPrice() ?>',
+                                                    '<?php echo $_product->getDescription() ?>',
+                                                    '<?php echo $_product->getQty() ?>',
+                                                    '<?php echo $_product->getTypeProduct() ?>',
+                                                    '<?php echo $_product->getSpecialPrice() ?>'
+            )" ></div>
+    <?php endforeach; ?>
+    </div>
+    <div class="row">
+        <div class=" btn-group nav_button">
+            <div class="btn btn-default" ng-click="filterSortType('phone')">Mobile phone</div>
+            <div class="btn btn-default" ng-click="filterSortType('Photo')">Photo</div>
+            <div class="btn btn-default" ng-click="filterSortType('Notepad')">Notepad</div>
+            <div class="btn btn-default" ng-click="filterSortType('Notebook')">Notebook</div>
+            <div class="btn btn-default" ng-click="filterSortType('TV')">TV</div>
+            <div class="btn btn-default" ng-click="filterSortType('Complect')">Complect to PC</div>
+            <div class="btn btn-default" ng-click="filterSortType('Aksess')">Aksess</div>
+            <div class="btn btn-default" ng-click="filterSortType('')">No type</div>
+        </div>
+    </div>
 
-                        <h2><?php echo $_product->getName() ?></h2>
-                        <span>Sku: </span>
-                        <span><?php echo $_product->getSku() ?></span>
-                        <br>
-                        <span>Price: </span>
-                        <span><?php echo $_product->getPrice() ?></span>
-                        <br>
-                        <?php if ($_product->isSpecialPriceApplied()): ?>
-                            <span class="special">Special Price: </span>
-                            <span class="special"><?php echo $_product->getSpecialPrice() ?></span>
-                        <?php endif; ?>
+    <!--    <a class="btn btn-default" href="/?type=phone">Mobile phone</a>-->
+    <!--    <a class="btn btn-default" href="/?type=Photo">camera</a>-->
+    <!--    <a class="btn btn-default" href="/?type=Notepad">Notepad</a>-->
+    <!--    <a class="btn btn-default" href="/?type=Notebook">Notebook</a>-->
+    <!--    <a class="btn btn-default" href="/?type=TV">TV</a>-->
+    <!--    <a class="btn btn-default" href="/?type=Complect">Complect to PC</a>-->
+    <!--    <a class="btn btn-default" href="/?type=Aksess">Aksess</a>-->
+    <div class="row" ng-init="loadPaginate()">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-repeat="product in sortProduct | startFrom:currentPage*pageSize | limitTo:pageSize ">
+            <a href="?page=product_view&id={{product.id}}">
+                <div class="products">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <img src="{{product.image}}"/>
+                        </div>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <label>Name: </label>
+                            <h3>{{product.name}}</h3>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <label>Sku: <span>{{product.sku}}</span> </label>
+
+                            <label>Price: <span>{{product.price}}</span></label>
+
+                            <label>Description: <span>{{product.description}}</span></label>
+
+                            <label>Type: <span>{{product.type || ' not specified '}}</span></label>
+
+                            <label ng-hide="{{product.specialPrice == 0.00}}">Special Price: <span class="special">{{product.specialPrice}}</span></label>
+                        </div>
+                    </div>
+
                 </div>
             </a>
-            <form action="?page=quote_add" method="POST">
-                <label for="count">Available quantity - <?php echo $_product->getQty() ?>: </label>
-                <input type="text" name="quote[count]">
-                <input type="text" name="quote[product_id]" value="<?php echo $_product->getId() ?>" hidden>
-                <input type="submit" class="btn-info" value="Add quote"/>
+            <form class="navbar-form " action="?page=quote_add" method="POST">
+                <div class="form-group" >
+                    <label for="count">Available quantity - {{product.qty}}: </label>
+                    <input class="form-control input_product_add" type="text" name="quote[count]">
+                    <input type="text" name="quote[product_id]" value="{{product.id}}" hidden>
+                    <input type="submit" class="btn btn-default" value="Add quote"/>
+                </div>
+
             </form>
-            <a href="?page=product_edit&product_id=<?php echo $_product->getId(); ?>">Update <?php echo $_product->getName(); ?></a>
+            <a href="?page=product_edit&product_id={{product.id}}">Update {{product.name}}</a>
         </div>
-        <?php endforeach; ?>
     </div>
     <div class="row">
-        <?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
-            <a href="/?p=<?php echo $page; ?>"><?php echo $page; ?></a>
-        <?php endfor; ?>
+        <div class=" btn-group" ng-repeat="page in [] | range:pages">
+            <div class="btn btn-default" ng-click="editPage(page+1)" >{{ page + 1  }}</div>
+        </div>
     </div>
+
     <div class="row">
-        <form action="?page=product_add" method="POST">
-            <div>
-            <label>Product name: </label>
-            <input type="text" name="product[name]">
-        </div>
+        <form class="add_product" action="?page=product_add" method="POST">
+            <div class="form-group">
+                <input class="form-control" type="text" name="product[name]" placeholder="Product name">
+            </div>
 
-        <div>
-            <label>Unique number(sku): </label>
-            <input type="text" name="product[sku]">
-        </div>
+            <div  class="form-group">
+                <input class="form-control" type="text" name="product[sku]" placeholder="Unique number(sku)">
+            </div>
 
-        <div>
-            <label>Price: </label>
-            <input type="text" name="product[price]">
-        </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="product[price]" placeholder="Price">
+            </div>
 
-        <div>
-            <label>Special_price: </label>
-            <input type="text" name="product[special_price]">
-        </div>
+            <div class="form-group">
+                <textarea class="form-control" type="text" width="200" name="product[description]" placeholder="Description"></textarea>
+            </div>
 
-        <div>
-            <label>Load image: </label>
-            <input type="text" name="product[image]">
-        </div>
+            <div class="form-group">
+                <select class="form-control" type="text" width="200" name="product[type_product]" placeholder="Description">
+                    <option value="phone">Mobile phone</option>
+                    <option value="Photo">Сamera</option>
+                    <option value="Notepad">Notepad</option>
+                    <option value="Notebook">Notebook</option>
+                    <option value="TV">TV</option>
+                    <option value="Complect">Complect to PC</option>
+                    <option value="Aksess">Aksess</option>
+                </select>
+            </div>
 
-        <input type="submit" value="Add product"/>
-    </form>
+            <div class="form-group">
+                <input class="form-control" type="text" name="product[special_price]" placeholder="Special Price">
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" type="text" name="product[image]" placeholder="Load image">
+            </div>
+
+            <input  class="btn btn-default" type="submit" value="Add product"/>
+        </form>
     </div>
 
 </div>
+<!--    <a class="btn btn-default" href="/?type=phone">Mobile phone</a>-->
+<!--    <a class="btn btn-default" href="/?type=Photo">camera</a>-->
+<!--    <a class="btn btn-default" href="/?type=Notepad">Notepad</a>-->
+<!--    <a class="btn btn-default" href="/?type=Notebook">Notebook</a>-->
+<!--    <a class="btn btn-default" href="/?type=TV">TV</a>-->
+<!--    <a class="btn btn-default" href="/?type=Complect">Complect to PC</a>-->
+<!--    <a class="btn btn-default" href="/?type=Aksess">Aksess</a>-->
+
+    <!--        --><?php //foreach ($this->get('products') as $_product): ?>
+<!--        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">-->
+<!--            <a href="?page=product_view&id=--><?php //echo $_product->getId(); ?><!--">-->
+<!--                <div class="products">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">-->
+<!--                            <img src="--><?php //echo $_product->getImage(); ?><!--"/>-->
+<!--                        </div>-->
+<!--                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">-->
+<!--                            <label>Name: </label>-->
+<!--                            <h3>--><?php //echo $_product->getName() ?><!--</h3>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">-->
+<!--                            <label class="text-overflow">Sku: <span>--><?php //echo $_product->getSku() ?><!--</span> </label>-->
+<!---->
+<!--                            <label>Price: <span>--><?php //echo $_product->getPrice() ?><!--</span></label>-->
+<!---->
+<!--                            <label class="text_size">Description: <span>--><?php //echo $_product->getDescription() ?><!--</span></label>-->
+<!---->
+<!--                            <label class="text_size">Type: <span>--><?php //echo $_product->getTypeProduct() ?><!--</span></label>-->
+<!---->
+<!--                            --><?php //if ($_product->isSpecialPriceApplied()): ?>
+<!--                                <label class="">Special Price: <span class="special">--><?php //echo $_product->getSpecialPrice() ?><!--</span></label>-->
+<!---->
+<!--                            --><?php //endif; ?>
+<!--                        </div>-->
+<!--                    </div>-->
+<!---->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <form class="navbar-form" action="?page=quote_add" method="POST">-->
+<!--                <div class="form-group" >-->
+<!--                    <label for="count">Available quantity - --><?php //echo $_product->getQty() ?><!--: </label>-->
+<!--                    <input class="form-control" type="text" name="quote[count]">-->
+<!--                    <input type="text" name="quote[product_id]" value="--><?php //echo $_product->getId() ?><!--" hidden>-->
+<!--                    <input type="submit" class="btn btn-default" value="Add quote"/>-->
+<!--                </div>-->
+<!---->
+<!--            </form>-->
+<!--            <a href="?page=product_edit&product_id=--><?php //echo $_product->getId(); ?><!--">Update --><?php //echo $_product->getName(); ?><!--</a>-->
+<!--        </div>-->
+<!--        --><?php //endforeach; ?>
+
+<!--    <div class="row">-->
+<!--        --><?php //for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
+<!--            <a href="/?p=--><?php //echo $page; ?><!--">--><?php //echo $page; ?><!--</a>-->
+<!--        --><?php //endfor; ?>
+<!--    </div>-->
+
+
+
+

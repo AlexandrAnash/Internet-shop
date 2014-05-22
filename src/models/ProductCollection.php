@@ -39,6 +39,11 @@ class ProductCollection
         return $this->_items;
     }
 
+    public function filterByProduct($type)
+    {
+        $this->_resource->filterBy('type_product', $type);
+    }
+
     public function getIterator()
     {
         return new \ArrayIterator($this->getProducts());

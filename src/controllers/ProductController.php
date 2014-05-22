@@ -22,13 +22,14 @@ class ProductController
         $paginator = $this->_di->get('Paginator', ['collection' => $resource]);
         $products = $this->_di->get('ProductCollection', ['resource' => $resource]);
         $ProductStores = $this->_di->get('ProductStoreCollection', ['resource' => $resourceStore]);
-
+//        $type_product = isset($_GET['type']) ? $_GET['type'] : "phone";
+//        $products->filterByProduct($type_product);
         $productObj = $this->_di->get('Product');
 
-        $paginator
-            ->setItemCountPerPage(6)
-            ->setCurrentPageNumber(isset($_GET['p']) ? $_GET['p'] : 1);
-        $pages = $paginator->getPages();
+//        $paginator
+//            ->setItemCountPerPage(6)
+//            ->setCurrentPageNumber(isset($_GET['p']) ? $_GET['p'] : 1);
+//        $pages = $paginator->getPages();
 
         foreach ($products as $key => $product) {
             $qty = 0;
@@ -41,10 +42,18 @@ class ProductController
             $productObj->setQty($qty);
             $productObj->save();
         }
+        foreach ($products as $product) {
+            if ($type_product = 'Mobile phone'){
+
+            }
+
+        }
+
 
         return $this->_di->get('View', [
             'template' => 'product_list',
-            'params'   => ['products' => $products, 'pages' => $pages]
+            'params'   => ['products' => $products]
+//            'params'   => ['products' => $products, 'pages' => $pages]
         ]);
     }
 
@@ -76,6 +85,8 @@ class ProductController
         $product->setSku($_POST['product']['sku']);
         $product->setName($_POST['product']['name']);
         $product->setImage($_POST['product']['image']);
+        $product->setDescription($_POST['product']['description']);
+        $product->setTypeProduct($_POST['product']['type_product']);
         $product->setPrice($_POST['product']['price']);
         $product->setSpecialPrice($_POST['product']['special_price']);
         $product->save();

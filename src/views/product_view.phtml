@@ -1,10 +1,16 @@
-<div class="products">
-    <div>
-        <img src="<?php echo $this->get('product')->getImage();?>" />
+<div class="products product_view">
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <img src="<?php echo $this->get('product')->getImage();?>" />
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <label>Name: </label>
+            <h3><?php echo $this->get('product')->getName() ?></h3>
+        </div>
     </div>
+
     <div>
-        <span>Name: </span>
-        <h2><?php echo $this->get('product')->getName() ?></h2>
+
         <span>Sku: </span>
         <span><?php echo $this->get('product')->getSku() ?></span>
         <br>
@@ -16,9 +22,9 @@
             <span class="special"><?php echo $this->get('product')->getSpecialPrice()  ?></span>
         <?php endif; ?>
     </div>
-
-
 </div>
+<label for="count">Available quantity - <?php echo $this->get('product')->getQty() ?>: </label>
+
 <form action="?page=quote_add" method="POST">
     <input type="text" name="quote[product_id]" value="<?php echo $this->get('product')->getId();?>" hidden>
     <input type="submit" id = "<?php echo $this->get('product')->getId();?>" value="Add quote" />
