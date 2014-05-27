@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Model\Resource\Table\Review as ReviewTable;
 use App\Model\Resource\Table\Product as ProductTable;
 use App\Model\Resource\Table\ProductStore as ProductStoreTable;
+use App\Model\Resource\Table\Customer as CustomerTable;
 
 
 class ProductController
@@ -63,16 +64,16 @@ class ProductController
         $product = $this->_di->get('Product');
         $product->load($_GET['id']);
         $resourceReview = $this->_di->get('ResourceCollection', ['table' => new ReviewTable]);
-        $paginator = $this->_di->get('Paginator', ['collection' => $resourceReview]);
+//        $paginator = $this->_di->get('Paginator', ['collection' => $resourceReview]);
         $reviews = $this->_di->get('ReviewCollection', ['resource' => $resourceReview]);
         $reviews->filterByProduct($product);
-        $paginator
-            ->setItemCountPerPage(2)
-            ->setCurrentPageNumber(isset($_GET['p']) ? $_GET['p'] : 1);
-        $pages = $paginator->getPages();
+//        $paginator
+//            ->setItemCountPerPage(2)
+//            ->setCurrentPageNumber(isset($_GET['p']) ? $_GET['p'] : 1);
+//        $pages = $paginator->getPages();
         return $this->_di->get('View', [
             'template' => 'product_view',
-            'params'   => ['product' => $product, 'reviews' => $reviews, 'pages' => $pages]
+            'params'   => ['product' => $product, 'reviews' => $reviews]//, 'pages' => $pages]
         ]);
     }
 
@@ -109,16 +110,24 @@ class ProductController
         $product->remove();
         $this->_redirect('product_list');
     }
-        public function addReviewAction()
+    public function addReviewAction()
     {
         $review = $this->_di->get('Review');
+        if (isset($_SESSION['userId'])) {
+            $session = $this->_di->get('Session');
+            $customer = $this->_di->get('Customer');
+            $customer->load($_POST['review']['customer_id']);
+            $customer->setRating($_POST['review']['rating'] + 1);
+            $customer->save();
+            $session->setRating($_POST['review']['rating'] + 1);
+        }
 
         $review->setProductId($_POST['review']['product_id']);
         $review->setCustomerId($_POST['review']['customer_id']);
         $review->setName($_POST['review']['name']);
         $review->setEmail($_POST['review']['email']);
         $review->setText($_POST['review']['text']);
-        $review->setRating($_POST['review']['rating']);
+        $review->setRating($_POST['review']['rating'] + 1);
         $review->save();
         $param = ['id' => $_POST['review']['product_id']];
         $this->_redirect('product_view', $param);

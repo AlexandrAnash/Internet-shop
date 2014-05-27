@@ -1,90 +1,127 @@
-<div class="products product_view">
-    <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <img src="<?php echo $this->get('product')->getImage();?>" />
+<div ng-controller="viewProductController">
+    <div class="products product_view" >
+        <div class="row row-header">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padding_none height_full">
+                <img class="height_full width_auto" src="<?php echo ($this->get('product')->getImage()) ? $this->get('product')->getImage() : '/images/no_image_available.png';?>" />
+            </div>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 padding_none--right ">
+                <span class="rightBlock big_size color_block_def "><?php echo $this->get('product')->getQty() ?></span>
+                <h3><?php echo $this->get('product')->getName() ?></h3>
+            </div>
         </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-            <label>Name: </label>
-            <h3><?php echo $this->get('product')->getName() ?></h3>
+
+        <div class="row row-body">
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+
+                <label>Sku: <span><?php echo $this->get('product')->getSku() ?></span> </label>
+
+                <label>Description: <span><?php echo $this->get('product')->getDescription() ?></span></label>
+
+                <label>Price: <span><?php echo $this->get('product')->getPrice() ?></span></label>
+
+                <label>Type: <span><?php echo ($this->get('product')->getTypeProduct()) ? $this->get('product')->getTypeProduct() : ' not specified '; ?></span></label>
+                <?php if ($this->get('product')->isSpecialPriceApplied()): ?>
+                    <label>Special Price: <span class="special"><?php echo $this->get('product')->getSpecialPrice()  ?></span></label>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 
-    <div>
-
-        <span>Sku: </span>
-        <span><?php echo $this->get('product')->getSku() ?></span>
-        <br>
-        <span>Price: </span>
-        <span><?php echo $this->get('product')->getPrice() ?></span>
-        <br>
-        <?php if ($this->get('product')->isSpecialPriceApplied()): ?>
-            <span class="special">Special Price: </span>
-            <span class="special"><?php echo $this->get('product')->getSpecialPrice()  ?></span>
-        <?php endif; ?>
-    </div>
-</div>
-<label for="count">Available quantity - <?php echo $this->get('product')->getQty() ?>: </label>
-
-<form action="?page=quote_add" method="POST">
-    <input type="text" name="quote[product_id]" value="<?php echo $this->get('product')->getId();?>" hidden>
-    <input type="submit" id = "<?php echo $this->get('product')->getId();?>" value="Add quote" />
-</form>
-
-
-<?php if(isset($_SESSION["userId"]) || isset($_SESSION["adminId"])): ?>
-    <form action="?page=product_addReview" method="POST">
-        <div>
-            <label>Name: </label>
-            <input type="text" name="review[name]">
-        </div>
-
-        <div>
-            <label>Email: </label>
-            <input type="text" name="review[email]">
-        </div>
-
-        <div>
-            <label>Text: </label>
-            <textarea rows="10" cols="45" name="review[text]"></textarea>
-        </div>
-
-        <div>
-            <label>Rating: </label>
-            <input type="text" name="review[rating]">
-        </div>
-
-        <input type="text" name="review[product_id]" value="<?php echo $this->get('product')->getId() ?>" hidden>
-        <input type="text" name="review[customer_id]" value="<?php echo $_SESSION["userId"] ?>" hidden>
-
-        <input type="submit" value="Add review"/>
+    <form action="?page=quote_add" method="POST">
+<!--        <input class="form-control input_product_add" type="text" name="quote[count]" value="1" hidden>-->
+        <input type="text" name="quote[count]" value="1" hidden>
+        <input type="text" name="quote[product_id]" value="<?php echo $this->get('product')->getId();?>" hidden>
+        <input type="submit" id = "<?php echo $this->get('product')->getId();?>" value="Add quote" />
     </form>
- <?php endif; ?>
-
-<div class="reviews">
-    <h2>Reviews!</h2>
-
-<!--    <h3 id = 'valueRating'>--><?php //echo $reviewsAll->getAverageRating(); ?><!--</h3>-->
-    <?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
-        <a href="/?page=product_view&id=<?php echo $this->get('product')->getId();?>&p=<?php echo $page; ?>"><?php echo $page; ?></a>
-    <?php endfor; ?>
-    <br>
 
     <?php foreach ($this->get('reviews') as $_review): ?>
-
-        <div class="review">
-            <span>Product_id: </span>
-            <h2 id = 'productID'><?php echo $this->get('product')->getId() ?></h2>
-            <lable>Name: </lable>
-            <h4><?php echo $_review->getName() ?></h4>
-            <lable>E-mail: </lable>
-            <div class="value"><?php echo $_review->getEmail() ?></div>
-            <lable>Description: </lable>
-            <div class="value"><?php echo $_review->getText() ?></div>
-            <lable>Rating: </lable>
-            <div class="value"><?php echo $_review->getRating() ?></div>
-        </div>
-        <br>
-        <a href="?page=product_deleteReview&review_id=<?php echo $_review->getId();?>&id=<?php echo $this->get('product')->getId();?>">Delete <?php echo $this->get('product')->getName(); ?></a>
-
+        <div ng-show="false" class="hidden" ng-init="loadReviews('<?php echo $_review->getId(); ?>',
+                                                       '<?php echo $_review->getRating() ?>',
+                                                        '<?php echo $_review->getName(); ?>',
+                                                        '<?php echo $_review->getEmail() ?>',
+                                                        '<?php echo $_review->getText() ?>'
+                )" ></div>
     <?php endforeach; ?>
+    <div class="reviews base_content_reply">
+        <h2 class="header_block">Reviews!</h2>
+        <div class="content_reply">
+
+            <!--    <h3 id = 'valueRating'>--><?php //echo $reviewsAll->getAverageRating(); ?><!--</h3>-->
+            <div class="row">
+                <div class=" btn-group" ng-if="pages > 1" ng-repeat="page in [] | range:pages">
+                    <div class="btn btn-default"  ng-class="{'active': currentPage-1 === $index }" ng-click="editPage(page+1)" >{{ page + 1  }}</div>
+                </div>
+            </div>
+            <br>
+
+            <div class="review" ng-repeat="review in allReviews | startFrom:currentPage*pageSize | limitTo:pageSize">
+                <div class="leftContainer">
+                    <img src="/images/no-avatar.png" alt=""/>
+                </div>
+                <div class="rightContainer">
+                    <div class="rightBlock">Rating:
+                    <span>
+                        {{ review.rating }}
+                    </span>
+                    </div>
+                    <div>Name:
+                    <span>
+                        {{ review.name }}
+                    </span>
+                    </div>
+
+
+                    <div>E-mail:
+                    <span>
+                        {{ review.email }}
+                    </span>
+                    </div>
+                </div>
+
+
+                <div>Comment:
+                <span>
+                    {{ review.text }}
+                </span>
+                </div>
+            </div>
+            <br>
+    <!--        <a href="?page=product_deleteReview&review_id=--><?php //echo $_review->getId();?><!--&id=--><?php //echo $this->get('product')->getId();?><!--">Delete --><?php //echo $this->get('product')->getName(); ?><!--</a>-->
+
+        </div>
+    </div>
+
+
+    <?php if(isset($_SESSION["userId"]) || isset($_SESSION["adminId"])): ?>
+        <form class="add_product add_review" action="?page=product_addReview" method="POST">
+            <div class="form-group">
+                <span>Name: </span>
+                <input type="text" name="review[name]" value="<?php echo $_SESSION["userName"] ?>" disabled>
+                <input type="text" name="review[name]" value="<?php echo $_SESSION["userName"] ?>" hidden>
+            </div>
+
+            <div class="form-group">
+                <label>Email: </label>
+                <input type="text" name="review[email]" >
+            </div>
+
+            <div class="form-group">
+                <label>Text: </label>
+                <textarea rows="7" cols="45" name="review[text]"></textarea>
+            </div>
+
+            <div class="form-group">
+                <span>Rating: </span>
+                <?php echo $_SESSION["userRating"] ?>
+                <input type="text" name="review[rating]" value="<?php echo $_SESSION["userRating"] ?>" disabled>
+                <input type="text" name="review[rating]" value="<?php echo $_SESSION["userRating"] ?>" hidden>
+            </div>
+
+            <input type="text" name="review[product_id]" value="<?php echo $this->get('product')->getId() ?>" hidden>
+            <input type="text" name="review[customer_id]" value="<?php echo $_SESSION["userId"] ?>" hidden>
+
+            <input  class="btn btn-default"  type="submit" value="Add review"/>
+        </form>
+     <?php endif; ?>
+
 </div>

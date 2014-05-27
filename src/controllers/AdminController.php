@@ -14,9 +14,8 @@ use App\Model\Resource\Table\Admin as AdminTable;
 use App\Model\Session;
 
 class AdminController
+    extends SalesController
 {
-    private $_di;
-
     public function __construct(\Zend\Di\Di $di)
     {
         $this->_di = $di;
@@ -71,14 +70,12 @@ class AdminController
         $orders = $this->_di->get('OrderCollection', ['collection' => $resourceOrder]);
         $id_sort = 0;
         $filterKey = isset($_POST['filter']['key']) ? $_POST['filter']['key'] : null;
-        var_dump(count($orders->getOrders()));
         $filterValue = isset($_POST['filter']['value']) ? $_POST['filter']['value']  : null;
         $paginator
             ->setItemCountPerPage(1)
             ->setCurrentPageNumber(isset($_GET['p']) ? $_GET['p'] : 1);
 
         $pages = $paginator->getPages();
-        var_dump(count($orders->getOrders()));
         if (isset($_POST['sort']))
         {
             foreach ($_POST['sort'] as $key => $value) {
@@ -127,14 +124,19 @@ class AdminController
 
         $order->load($_GET['id']);
         $OPCollection->filterByOrder($_GET['id']);
-
-        return $this->_di->get('View', [
+        if (isset($_POST['approve'])) {
+            $order->setStatus($_POST['approve']);
+            $order->save();
+            header("Location: /?page=admin_orders");
+        } else {
+            return $this->_di->get('View', [
             'template' => 'admin_editOrder',
              'params' => [
                 'orders' => $order,
                 'OPCollection' => $OPCollection,
-            ]
-        ]);
+                ]
+            ]);
+        }
     }
 
     private function _registerAdmin()

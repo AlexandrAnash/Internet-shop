@@ -1,11 +1,18 @@
-<h2>Shipping!</h2>
-<form action="/?page=checkout_shipping" method="post">
+<h3 class="center-block login_form page-header alert-success padding_add_20px">
+    Shipping!
+</h3>
 
-        <?php foreach($this->get('methods') as $method): ?>
-    <div class="method_shipping">
-            <label><input type="radio" name="method" value="<?php echo $method['code'] ?>"><?php echo $method['price'] ?>$ (<?php echo $method['label'] ?>)</label>
-    </div>
-        <?php endforeach; ?>
 
-    <div><input type="submit" value="Next"></div>
+<form class="center-block width_checkout--bnt--50 font_20 padding_add_20px alert-warning" action="/?page=checkout_shipping" method="post">
+
+    <?php foreach($this->get('methods') as $method): ?>
+        <div class="radio">
+            <label class="">
+                <input type="radio" name="method" value="<?php echo $method['code'] ?>">
+                <?php echo $method['price'] ?>$ (<?php echo $method['label'] ?>)
+            </label>
+        </div>
+    <?php endforeach; ?>
+
+    <div class="form-group"><input class="btn btn-success" type="submit" value="Next"></div>
 </form>

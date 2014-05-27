@@ -1,19 +1,19 @@
-<a class="page-back" href="/">&larr;</a>
-
 <div class="login_register" >
-    <h1 class="page-header">
+    <h3 class="center-block login_form alert-info padding_add_20px">
         Login Administrators!
-    </h1>
-    <form action="?page=admin_login" method="POST">
-        <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="admin[name]" />
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="text" id="password" name="admin[password]" />
-        </div>
+    </h3>
+    <form class="center-block login_form alert-success" action="?page=admin_login" method="POST">
+        <div class="padding_add_20px">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="center-block form-control" type="text" id="name" name="admin[name]" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="center-block form-control" type="password" id="password" name="admin[password]" />
+            </div>
 
-        <input type="submit" value="Login">
+            <input class="btn btn-default"  type="submit" value="Login">
+        </div>
     </form>
 </div>

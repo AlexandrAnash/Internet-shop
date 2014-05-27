@@ -115,8 +115,12 @@ class CheckoutController
         $resourceProductStore = $this->_di->get('ResourceCollection', ['table' => new ProductStoreTable]);
         $productStores = $this->_di->get('ProductStoreCollection', ['resource' => $resourceProductStore]);
 
-        $distanceGoogle = $this->getDistanseClientToStoresGoogle($quote->getAddress());
-        $distance = [];
+        $distanceGoogle = $this->getDistanceClientToStoresGoogle($quote->getAddress());
+        echo '<pre>';
+        var_dump($distanceGoogle);
+        echo '</pre>';
+
+    $distance = [];
         $returnDistance = [];
         foreach ($distanceGoogle as $key => $row)
         {
@@ -132,7 +136,6 @@ class CheckoutController
         echo '</pre>';
 
         foreach ($distanceGoogle as $dg) {
-            echo "distanceGoogle";
             foreach ($quote->getItems() as $key => $q) {
                 $product = $this->_di->get('Product');
                 $product->load($q->getProductId());
@@ -140,24 +143,18 @@ class CheckoutController
                     foreach ($productStores as $ps) {
                         if ($ps->getSku() == $product->getSku() && $ps->getStoreId() == $dg["store"]->getId()) {
                             if ($ps->getQty() != 0) {
-                                echo '<pre>';
-                                var_dump($ps);
-                                echo '</pre>';
                                 if ($ps->getQty() > $count[$key]) {
-                                    echo "-----------1------------";
                                     $count[$key]= 0;
                                     $ps->setQty($ps->getQty() - $q->getQty());
                                     $this->savePStore($ps);
                                     $returnDistance[] = $dg;
                                 } else {
                                     if ($ps->getQty() == $count[$key]) {
-                                        echo "-----------2------------";
                                         $count[$key] = $ps->getQty() - $count[$key];
                                         $ps->setQty($ps->getQty() - $q->getQty());
                                         $this->savePStore($ps);
                                         $returnDistance[] = $dg;
                                     } else {
-                                        echo "-----------3------------";
                                         $count[$key] = $count[$key] - $ps->getQty();
                                         $ps->setQty(0);
                                         $this->savePStore($ps);

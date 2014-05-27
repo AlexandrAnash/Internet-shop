@@ -1,0 +1,12 @@
+.th-btn {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0 !important;
+}
+.th-btn, button {
+    border: none !important;
+    cursor:pointer;
+
+}

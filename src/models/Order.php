@@ -94,6 +94,16 @@ class Order extends Entity
     {
         return $this->_getData('status');
     }
+
+    public function getDistance()
+    {
+        return $this->_getData('distance');
+    }
+
+    public function getDuration()
+    {
+        return $this->_getData('duration');
+    }
 // </editor-fold>
 
 
@@ -127,6 +137,15 @@ class Order extends Entity
     {
         $this->_data['status'] = $data;
     }
+    public function setDistance($data)
+    {
+        $this->_data['distance'] = $data;
+    }
+    public function setDuration($data)
+    {
+        $this->_data['duration'] = $data;
+    }
+
 
     public function sendEmail($dist)
     {
@@ -161,7 +180,8 @@ class Order extends Entity
             $messageContent .= "---------------------------------------<br>";
             $messageContent .= "Minimum shipping time - " . $dist[$key]['duration'] . '<br>';
             $messageContent .= "---------------------------------------<br>";
-
+            $this->setDistance($dist[$key]['distance']);
+            $this->setDuration($dist[$key]['duration']);
         }
         $messageContent .= "</div>";
 

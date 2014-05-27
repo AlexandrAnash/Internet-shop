@@ -22,6 +22,11 @@ class CustomerCollection
         return reset($this->_resource->fetch());
     }
 
+    public function filterByCustomer($customerId)
+    {
+        $this->_resource->filterBy('customer_id', $customerId);
+    }
+
     public function getCustomers()
     {
         return array_map(

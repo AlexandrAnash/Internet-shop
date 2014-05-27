@@ -26,6 +26,11 @@ class Customer extends Entity
         return $this->_getData('rating');
     }
 
+    public function setRating($rating)
+    {
+        $this->_data['rating'] = $rating;
+    }
+
     public function getId()
     {
         return $this->_getData('customer_id');

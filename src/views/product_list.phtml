@@ -5,7 +5,7 @@
 <!---->
 <!--<div id="outputDiv"></div>-->
 <div ng-controller="productListController" class="list_content">
-    <div class="row">
+    <div >
     <?php foreach ($this->get('products') as $_product): ?>
         <div ng-show="false" class="hidden" ng-init="loadProducts('<?php echo $_product->getId(); ?>',
                                                    '<?php echo $_product->getName() ?>',
@@ -39,26 +39,27 @@
     <!--    <a class="btn btn-default" href="/?type=TV">TV</a>-->
     <!--    <a class="btn btn-default" href="/?type=Complect">Complect to PC</a>-->
     <!--    <a class="btn btn-default" href="/?type=Aksess">Aksess</a>-->
-    <div class="row" ng-init="loadPaginate()">
+    <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-repeat="product in sortProduct | startFrom:currentPage*pageSize | limitTo:pageSize ">
             <a href="?page=product_view&id={{product.id}}">
                 <div class="products">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <img src="{{product.image}}"/>
+                    <div class="row row-header">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padding_none">
+                            <img src="{{product.image || '/images/no_image_available.png'}}"/>
                         </div>
-                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                            <label>Name: </label>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 padding_none">
+                            <span class="rightBlock big_size color_block_def font_20 ">{{product.qty}}</span>
+
                             <h3>{{product.name}}</h3>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row row-body">
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                             <label>Sku: <span>{{product.sku}}</span> </label>
 
-                            <label>Price: <span>{{product.price}}</span></label>
-
                             <label>Description: <span>{{product.description}}</span></label>
+
+                            <label>Price: <span>{{product.price}}</span></label>
 
                             <label>Type: <span>{{product.type || ' not specified '}}</span></label>
 
@@ -68,24 +69,28 @@
 
                 </div>
             </a>
-            <form class="navbar-form " action="?page=quote_add" method="POST">
-                <div class="form-group" >
-                    <label for="count">Available quantity - {{product.qty}}: </label>
-                    <input class="form-control input_product_add" type="text" name="quote[count]">
+            <form class="navbar-form margin_padding_none" ng-show="{{product.qty}}" action="?page=quote_add" method="POST">
+                <div class="form-group width_full" >
+<!--                    <input class="form-control input_product_add" type="text" name="quote[count]" value="1" hidden>-->
+                    <input type="text" name="quote[count]" value="1" hidden>
                     <input type="text" name="quote[product_id]" value="{{product.id}}" hidden>
-                    <input type="submit" class="btn btn-default" value="Add quote"/>
+                    <input type="submit" class="btn btn-default width_full" value="Add quote"/>
                 </div>
 
             </form>
-            <a href="?page=product_edit&product_id={{product.id}}">Update {{product.name}}</a>
+            <?php if(isset($_SESSION["adminId"])): ?>
+
+            <a href="?page=product_edit&product_id={{product.id}}"><i class="fa fa-pencil-square-o"></i>Update {{product.name}}</a>
+            <?php endif; ?>
+
         </div>
     </div>
     <div class="row">
-        <div class=" btn-group" ng-repeat="page in [] | range:pages">
-            <div class="btn btn-default" ng-click="editPage(page+1)" >{{ page + 1  }}</div>
+        <div class=" btn-group" ng-if="pages > 1" ng-repeat="page in [] | range:pages">
+            <div class="btn btn-default"  ng-class="{'active': currentPage-1 === $index }" ng-click="editPage(page+1)" >{{ page + 1  }}</div>
         </div>
     </div>
-
+    <?php if(isset($_SESSION["adminId"])): ?>
     <div class="row">
         <form class="add_product" action="?page=product_add" method="POST">
             <div class="form-group">
@@ -127,6 +132,8 @@
             <input  class="btn btn-default" type="submit" value="Add product"/>
         </form>
     </div>
+    <?php endif; ?>
+
 
 </div>
 <!--    <a class="btn btn-default" href="/?type=phone">Mobile phone</a>-->
@@ -156,7 +163,7 @@
 <!---->
 <!--                            <label>Price: <span>--><?php //echo $_product->getPrice() ?><!--</span></label>-->
 <!---->
-<!--                            <label class="text_size">Description: <span>--><?php //echo $_product->getDescription() ?><!--</span></label>-->
+<!--                            <label class="loadPaginate">Description: <span>--><?php //echo $_product->getDescription() ?><!--</span></label>-->
 <!---->
 <!--                            <label class="text_size">Type: <span>--><?php //echo $_product->getTypeProduct() ?><!--</span></label>-->
 <!---->

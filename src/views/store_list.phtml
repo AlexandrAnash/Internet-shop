@@ -1,7 +1,8 @@
-<?php foreach ($this->get('stores') as $key => $_store): ?>
+<div class="row">
+   <?php foreach ($this->get('stores') as $key => $_store): ?>
 
     <a href="?page=store_view&id=<?php echo $_store->getId(); ?>">
-        <div class="products">
+        <div class="products stores">
             <div>
                 <label>Name: </label>
                 <h2><?php echo $_store->getName() ?></h2>
@@ -27,59 +28,59 @@
 
     <br>
 
-<?php endforeach; ?>
+    <?php endforeach; ?>
+</div>
 
-
-<form action="?page=store_add" method="POST">
-    <div>
-        <label>Store name: </label>
-        <input type="text" name="store[name]">
+<div class="row">
+<form class="add_product add_store" action="?page=store_add" method="POST">
+    <div class="form-group">
+        <input class="form-control" type="text" name="store[name]" placeholder="Store name">
     </div>
 
-    <div class="address_input">
-        <label for="city">City: </label>
-        <select name="address[city_id]" id="city">
+    <div class="form-group">
+        <select class="form-control"  class="form-control" name="address[city_id]" id="city">
+            <option selected value="">select city</option>
             <?php foreach($this->get('city') as $_city): ?>
                 <option value="<?php echo $_city->getId(); ?>"><?php echo $_city->getName(); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
 
-    <div class="address_input">
-        <label for="region">Region: </label>
-        <select name="address[region_id]" id="region">
+    <div class="form-group">
+        <select class="form-control" name="address[region_id]" id="region">
+            <option selected value="">select region</option>
             <?php foreach($this->get('region') as $_region): ?>
                 <option value="<?php echo $_region->getId(); ?>"><?php echo $_region->getName(); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
 
-    <div class="address_input">
-        <label for="postal_code">Postal code: </label>
-        <input type="text" name="address[postal_code]">
+    <div class="form-group">
+        <input class="form-control" type="text" name="address[postal_code]" placeholder="Postal code">
     </div>
 
-    <div class="address_input">
-        <label for="street">Street: </label>
-        <input type="text" name="address[street]">
+    <div class="form-group">
+        <input class="form-control" type="text" name="address[street]" placeholder="Street">
     </div>
 
-    <div class="address_input">
-        <label for="home_number">Home number: </label>
-        <input type="text" name="address[home_number]">
+    <div class="form-group">
+        <input class="form-control" type="text" name="address[home_number]" placeholder="Home number">
     </div>
 
-    <div class="address_input">
-        <label for="flat">Flat: </label>
-        <input type="text" name="address[flat]">
+    <div class="form-group">
+        <input class="form-control" type="text" name="address[flat]" placeholder="Flat">
     </div>
 
-    <input type="submit" value="Add store"/>
+    <input class="btn btn-default" type="submit" value="Add store"/>
 </form>
+</div>
+
+<div class="row">
 
 <?php for ($page = 1; $page <= $this->get('pages')->pageCount; $page++): ?>
     <a href="?page=store_list&p=<?php echo $page; ?>"><?php echo $page; ?></a>
 <?php endfor; ?>
 <br>
 
+</div>
 

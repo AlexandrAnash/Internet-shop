@@ -25,7 +25,7 @@ class SalesController
         return $quote;
     }
 
-    protected function getDistanseClientToStoresGoogle($address) {
+    protected function getDistanceClientToStoresGoogle($address) {
         $resourceStore = $this->_di->get('ResourceCollection', ['table' => new StoreTable]);
         $stores = $this->_di->get('StoreCollection', ['resource' => $resourceStore]);
 

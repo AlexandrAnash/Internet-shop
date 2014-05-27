@@ -1,7 +1,7 @@
 .products div {
 }
 .products img{
-    width: 140%;
+    width: 100%;
 }
 
 .products {
@@ -12,8 +12,8 @@
     list-style: none;
     display: inline-block;
     width: 100%;
-    margin: 10px 10px;
-    padding: 10px 10px;
+    margin-top: 10px;
+    padding: 0px 10px;
 }
 .product, .product_view {
     width: 50%;
@@ -25,17 +25,23 @@
     text-overflow: ellipsis;
 }
 
+.add_review {
+    width: 35% !important;
+}
+
 .products label {
-    display: block ;
+    display: block;
+    overflow-x: hidden;
     margin-bottom: 10px;
-    margin-top: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 120%;
 }
 .products h2 {
     display: inline-block;
 
 }
-.products div {
-}
+
 .input_product_add {
     width: 65% !important;
     opacity: 0.9;
@@ -54,4 +60,37 @@
 .add_product {
     padding: 20px 20px;
     width: 50%;
+}
+
+.reviews {
+    background-color: #fFFFF0;
+    opacity: 0.75;
+    border-bottom: 2px solid blue;
+}
+
+.review {
+    background-color: #f1ffff;
+    border: 2px solid #000000;
+    margin-bottom: 5px;
+}
+
+.review .leftContainer {
+    float: left;
+    background-color: bisque;
+    width: 25%;
+
+}
+.review .leftContainer img {
+    margin: auto 6px;
+    height: 65px;
+}
+
+.review .rightContainer {
+    background-color: #e1ffff;
+    float: right;
+    width: 75%;
+    height: 65px;
+}
+.review .rightContainer div{
+    margin: 5px;
 }

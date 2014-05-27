@@ -74,10 +74,10 @@ class CustomerController
         //$resource = $this->_di->get('ResourceEntity', ['table' => new CustomerTable]);
         $_POST['customer']['password'] = md5($_POST['customer']['password']);
         $customer = $this->_di->get('Customer', ['data' => $_POST['customer']]);
+        $customer->save();
         //var_dump($customer);
         //$customer = new Customer($_POST['customer']);
         //die;
-        $customer->save();
     }
 
     private function _loginCustomer()

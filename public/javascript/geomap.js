@@ -17,7 +17,7 @@ function initialize() {
     }
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     geocoder = new google.maps.Geocoder();
-
+    document.write(document.cookie);
 
 //        geocoder.geocode(GeocoderRequest, function(GeocoderResult, GeocoderStatus){
 //            if (status == google.maps.GeocoderStatus.OK)

@@ -1,40 +1,78 @@
-<h1><?php echo $_SESSION['quote_id'] ?></h1>
 <?php foreach ($this->get('items') as $key => $_quote): ?>
     <?php $_product = $_quote->getProduct() ?>
     <a href="?page=product_view&id=<?php echo $_product->getId(); ?>">
-        <div class="products">
-            <div>
-                <img src="<?php echo $_product->getImage(); ?>" />
+        <div class="products product_view" >
+            <div class="row row-header">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padding_none height_full">
+                    <img class="height_full width_auto" src="<?php echo ($_product->getImage()) ? $_product->getImage() : '/images/no_image_available.png';?>" />
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 padding_none--right ">
+                    <span class="rightBlock big_size color_block_def "><?php echo $_quote->getQty() ?></span>
+                    <h3><?php echo $_product->getName() ?></h3>
+                </div>
             </div>
-            <div>
-                <span>Name: </span>
-                <h2><?php echo $_product->getName() ?></h2>
-                <span>Sku: </span>
-                <span><?php echo $_product->getSku() ?></span>
-                <br>
-                <span>Price: </span>
-                <span><?php echo $_product->getPrice() ?></span>
-                <br>
-                <?php if ($_product->isSpecialPriceApplied()): ?>
-                    <span class="special">Special Price: </span>
-                    <span class="special"><?php echo $_product->getSpecialPrice()  ?></span>
-                <?php endif; ?>
+
+            <div class="row row-body">
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+
+                    <label>Sku: <span><?php echo $_product->getSku() ?></span> </label>
+
+                    <label>Description: <span><?php echo $_product->getDescription() ?></span></label>
+
+                    <label>Price: <span><?php echo $_product->getPrice() ?></span></label>
+
+                    <label>Type: <span><?php echo ($_product->getTypeProduct()) ? $_product->getTypeProduct() : ' not specified '; ?></span></label>
+                    <?php if ($_product->isSpecialPriceApplied()): ?>
+                        <label>Special Price: <span class="special"><?php echo $_product->getSpecialPrice()  ?></span></label>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </a>
-    <br>
+<!---->
+<!--    <div class="products">-->
+<!--            <div>-->
+<!--                <img src="--><?php //echo $_product->getImage(); ?><!--" />-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <span>Name: </span>-->
+<!--                <h2>--><?php //echo $_product->getName() ?><!--</h2>-->
+<!--                <span>Sku: </span>-->
+<!--                <span>--><?php //echo $_product->getSku() ?><!--</span>-->
+<!--                <br>-->
+<!--                <span>Price: </span>-->
+<!--                <span>--><?php //echo $_product->getPrice() ?><!--</span>-->
+<!--                <br>-->
+<!--                --><?php //if ($_product->isSpecialPriceApplied()): ?>
+<!--                    <span class="special">Special Price: </span>-->
+<!--                    <span class="special">--><?php //echo $_product->getSpecialPrice()  ?><!--</span>-->
+<!--                --><?php //endif; ?>
+<!--            </div>-->
+<!--        </div>-->
+<!--    <br>-->
+<!---->
+<!--    <label for="count">count: --><?php //echo $_quote->getQty() ?><!-- </label>-->
+    <div class="form-group">
+        <form class="width_checkout--bnt--25" action="?page=quote_delete" method="POST">
+            <input type="text" name="quote[count]" value="1" hidden>
+    <!--        <input class="form-control" type="text" name="quote[count]" >-->
+            <input type="text" name="quote[product_id]" value="<?php echo $_product->getId()?>" hidden>
+            <input class="form-control alert-info" type="submit"  value="Delete" />
+        </form>
+        <?php if($_quote->getQty()>1): ?>
+        <form class="width_checkout--bnt--25"  action="?page=quote_delete" method="POST">
+            <input type="text" name="quote[count]" value="<?php echo $_quote->getQty() ?>" hidden>
+    <!--        <input class="form-control" type="text" name="quote[count]" >-->
+            <input type="text" name="quote[product_id]" value="<?php echo $_product->getId()?>" hidden>
+            <input class="form-control alert-danger" type="submit"  value="Delete all" />
+        </form>
+        <?php endif ?>
+    </div>
 
-    <label for="count">count: <?php echo $_quote->getQty() ?> </label>
-    <form action="?page=quote_delete" method="POST">
-        <label for="count">count: </label>
-        <input type="text" name="quote[count]" >
-        <input type="text" name="quote[product_id]" value="<?php echo $_product->getId()?>" hidden>
-        <input type="submit"  value="Delete" />
-    </form>
 
 
 
 <?php endforeach; ?>
-<a href="?page=checkout_address">
-    <input type="submit" value="Checkout" >
+<a class="form-group" href="?page=checkout_address">
+    <input class="width_checkout--bnt--50 btn btn-success" type="submit" value="Checkout" >
 </a>

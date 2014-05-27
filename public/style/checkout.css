@@ -1,0 +1,15 @@
+.width_checkout--bnt--25 {
+    display: inline-block;
+    width: 25%;
+}
+.width_checkout--bnt--25, .form-control{
+    text-transform: uppercase;
+}
+
+.width_checkout--bnt--50 {
+    width: 50%;
+}
+.width_checkout--bnt--50, .btn{
+    text-transform: uppercase;
+
+}

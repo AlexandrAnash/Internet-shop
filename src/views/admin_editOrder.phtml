@@ -1,55 +1,81 @@
-<a class="page-back" href="/">&larr;</a>
-
-<div class="orders" >
-    <h1 class="page-header">
+<div class="orders center-block" >
+    <h3 class="center-block page-header alert-success">
         Edit order!
-    </h1>
-    <table class="tableOrders">
+    </h3>
+    <div class="row">
+        <table class="table table-condensed table-hover margin_padding_none">
         <?php $order = $this->get('orders') ?>
-        <tr>
-            <form name="Email Header" method="post" action="?page=admin_orders">
-                <th>Number order</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>City</th>
-                <th>Region</th>
-                <th>Postal Code</th>
-                <th>Street</th>
-                <th>Flat</th>
-                <th>Customer name</th>
-                <th>Shipping Method</th>
-                <th>Payment Method</th>
-                <th>Grand total</th>
-            </form>
-        </tr>
-        <tr>
-            <td><?php echo $order->getNumber(); ?></td>
-            <td><?php echo $order->getStatus(); ?></td>
-            <td><?php echo $order->getDate(); ?></td>
-            <td><?php echo $order->getCity(); ?></td>
-            <td><?php echo $order->getRegion(); ?></td>
-            <td><?php echo $order->getPostalCode(); ?></td>
-            <td><?php echo $order->getStreet(); ?></td>
-            <td><?php echo $order->getFlat(); ?></td>
-            <td><?php echo $order->getCustomer(); ?></td>
-            <td><?php echo $order->getShippingMethod(); ?></td>
-            <td><?php echo $order->getPaymentMethod(); ?></td>
-            <td><?php echo $order->getGrandTotal(); ?></td>
-        </tr>
+            <tr>
+                <form name="Email Header" method="post" action="?page=admin_orders">
+                    <th class="warning">Number order</th>
+                    <th class="warning">Status</th>
+                    <th class="warning">Date</th>
+                    <th class="warning">City</th>
+                    <th class="warning">Region</th>
+                    <th class="warning">Postal Code</th>
+                    <th class="warning">Street</th>
+                    <th class="warning">Flat</th>
+                </form>
+            </tr>
+            <tr>
+                <td class="warning"><?php echo $order->getNumber(); ?></td>
+                <td class="warning"><?php echo $order->getStatus(); ?></td>
+                <td class="warning"><?php echo $order->getDate(); ?></td>
+                <td class="warning"><?php echo $order->getCity(); ?></td>
+                <td class="warning"><?php echo $order->getRegion(); ?></td>
+                <td class="warning"><?php echo $order->getPostalCode(); ?></td>
+                <td class="warning"><?php echo $order->getStreet(); ?></td>
+                <td class="warning"><?php echo $order->getFlat(); ?></td>
 
-        <tr>
-            <th>Name Product</th>
-            <th>Sku</th>
-            <th>Count</th>
-            <th>Price</th>
-        </tr>
-        <?php foreach ($this->get('OPCollection') as $itemProduct): ?>
-        <tr>
-            <td><?php echo $itemProduct->getProductName(); ?></td>
-            <td><?php echo $itemProduct->getProductSku(); ?></td>
-            <td><?php echo $itemProduct->getProductQty(); ?></td>
-            <td><?php echo $itemProduct->getProductPrice(); ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+            </tr>
+            </table>
+        </div>
+        <div class="row">
+
+        <table class="table table-condensed table-hover margin_padding_none">
+
+            <tr>
+                <form name="Email Header" method="post" action="?page=admin_orders">
+                    <th class="success">Customer name</th>
+                    <th class="success">Shipping Method</th>
+                    <th class="success">Payment Method</th>
+                    <th class="success">Grand total</th>
+                    <th class="success">Distance</th>
+                    <th class="success">Duration</th>
+                </form>
+            </tr>
+            <tr>
+                <td class="success"><?php echo $order->getCustomer(); ?></td>
+                <td class="success"><?php echo $order->getShippingMethod(); ?></td>
+                <td class="success"><?php echo $order->getPaymentMethod(); ?></td>
+                <td class="success"><?php echo $order->getGrandTotal(); ?></td>
+                <td class="success"><?php echo $order->getDistance(); ?></td>
+                <td class="success"><?php echo $order->getDuration(); ?></td>
+            </tr>
+            </table>
+        </div>
+        <div class="row">
+            <table class="table table-condensed table-hover margin_padding_none">
+
+                <tr>
+                    <th class="danger">Name Product</th>
+                    <th class="danger">Sku</th>
+                    <th class="danger">Count</th>
+                    <th class="danger">Price</th>
+                </tr>
+                <?php foreach ($this->get('OPCollection') as $itemProduct): ?>
+                <tr>
+                    <td class="danger"><?php echo $itemProduct->getProductName(); ?></td>
+                    <td class="danger"><?php echo $itemProduct->getProductSku(); ?></td>
+                    <td class="danger"><?php echo $itemProduct->getProductQty(); ?></td>
+                    <td class="danger"><?php echo $itemProduct->getProductPrice(); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    <div class="row">
+        <form name="Email Header" method="post" action="?page=admin_editOrder&id=<?php echo $order->getId()?>">
+            <input type="submit" class="btn btn-default width_full" name="approve" value="Approve">
+        </form>
+
 </div>

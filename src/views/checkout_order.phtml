@@ -1,24 +1,26 @@
-<h2>Order</h2>
-<form action="/?page=checkout_order" method="post">
+<h3 class="center-block login_form page-header alert-success padding_add_20px">
+    Order!
+</h3>
+<form class="center-block login_form font_20 padding_add_20px alert-info" action="/?page=checkout_order" method="post">
 
-    <div class="order">
-        <label>Total price of the products: </label>
-        <?php echo $this->get('subtotal') ?>
-        <label>$</label>
+    <div class="form-group">
+        <label class="form-control">
+            Price of the products: <?php echo $this->get('subtotal') ?>$
+        </label>
     </div>
 
-    <div class="order">
-        <label>Total price of the shipping: </label>
-        <?php echo $this->get('shipping') ?>
-        <label>$</label>
+    <div class="form-group">
+        <label class="form-control">
+            Total price of the shipping: <?php echo $this->get('shipping') ?>$
+        </label>
     </div>
 
-    <div class="order">
-        <label>Total price: </label>
-        <?php echo $this->get('grand_total') ?>
-        <label>$</label>
+    <div class="form-group">
+        <label class="form-control">
+            Total price: <?php echo $this->get('grand_total') ?>$
+        </label>
     </div>
 
 
-    <div><input type="submit" value="All right!"></div>
+    <div><input class="btn btn-success" type="submit" value="All right!"></div>
 </form>
