@@ -26,13 +26,13 @@
             </div>
         </div>
     </div>
-
-    <form action="?page=quote_add" method="POST">
-<!--        <input class="form-control input_product_add" type="text" name="quote[count]" value="1" hidden>-->
+    <form action="?page=quote_add" ng-show="<?php echo ($this->get('product')->getQty() > 0 ? true : false) ?>" method="POST">
+        <!--        <input class="form-control input_product_add" type="text" name="quote[count]" value="1" hidden>-->
         <input type="text" name="quote[count]" value="1" hidden>
         <input type="text" name="quote[product_id]" value="<?php echo $this->get('product')->getId();?>" hidden>
-        <input type="submit" id = "<?php echo $this->get('product')->getId();?>" value="Add quote" />
+        <input class="btn btn-default product_view" type="submit" id = "<?php echo $this->get('product')->getId();?>" value="Add quote" />
     </form>
+
 
     <?php foreach ($this->get('reviews') as $_review): ?>
         <div ng-show="false" class="hidden" ng-init="loadReviews('<?php echo $_review->getId(); ?>',
