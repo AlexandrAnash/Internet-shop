@@ -7,7 +7,6 @@
 .products {
     height: 300px;
     background-color: #fFFFF0;
-    opacity: 0.75;
     border-bottom: 2px solid blue;
     list-style: none;
     display: inline-block;
@@ -44,7 +43,6 @@
 
 .input_product_add {
     width: 65% !important;
-    opacity: 0.9;
 }
 .form-group input .form-group textarea{
     width: 45% !important;
@@ -64,8 +62,7 @@
 
 .reviews {
     background-color: #fFFFF0;
-    opacity: 0.75;
-    border-bottom: 2px solid blue;
+     border-bottom: 2px solid blue;
 }
 
 .review {

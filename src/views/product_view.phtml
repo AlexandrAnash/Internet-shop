@@ -1,5 +1,5 @@
 <div ng-controller="viewProductController">
-    <div class="products product_view" >
+    <div class="products product_view" ng-init="loadType('<?php echo $this->get('product')->getTypeProduct() ?>')">
         <div class="row row-header">
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padding_none height_full">
                 <img class="height_full width_auto" src="<?php echo ($this->get('product')->getImage()) ? $this->get('product')->getImage() : '/images/no_image_available.png';?>" />
@@ -13,15 +13,15 @@
         <div class="row row-body">
             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 
-                <label>Sku: <span><?php echo $this->get('product')->getSku() ?></span> </label>
+                <label>Идентификатор: <span><?php echo $this->get('product')->getSku() ?></span> </label>
 
-                <label>Description: <span><?php echo $this->get('product')->getDescription() ?></span></label>
+                <label>Описание: <span><?php echo $this->get('product')->getDescription() ?></span></label>
 
-                <label>Price: <span><?php echo $this->get('product')->getPrice() ?></span></label>
+                <label>Цена: <span><?php echo $this->get('product')->getPrice() ?></span></label>
 
-                <label>Type: <span><?php echo ($this->get('product')->getTypeProduct()) ? $this->get('product')->getTypeProduct() : ' not specified '; ?></span></label>
+                <label>Тип: <span>{{typeShow || ' тип не определен ' }}</span></label>
                 <?php if ($this->get('product')->isSpecialPriceApplied()): ?>
-                    <label>Special Price: <span class="special"><?php echo $this->get('product')->getSpecialPrice()  ?></span></label>
+                    <label>Специальная цена: <span class="special"><?php echo $this->get('product')->getSpecialPrice()  ?></span></label>
                 <?php endif; ?>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 )" ></div>
     <?php endforeach; ?>
     <div class="reviews base_content_reply">
-        <h2 class="header_block">Reviews!</h2>
+        <h2 class="header_block">Отзывы!</h2>
         <div class="content_reply">
 
             <!--    <h3 id = 'valueRating'>--><?php //echo $reviewsAll->getAverageRating(); ?><!--</h3>-->
@@ -59,19 +59,19 @@
                     <img src="/images/no-avatar.png" alt=""/>
                 </div>
                 <div class="rightContainer">
-                    <div class="rightBlock">Rating:
+                    <div class="rightBlock">Рейтинг покупателя:
                     <span>
                         {{ review.rating }}
                     </span>
                     </div>
-                    <div>Name:
+                    <div>Имя:
                     <span>
                         {{ review.name }}
                     </span>
                     </div>
 
 
-                    <div>E-mail:
+                    <div>Почта:
                     <span>
                         {{ review.email }}
                     </span>
@@ -79,7 +79,7 @@
                 </div>
 
 
-                <div>Comment:
+                <div>Отзыв:
                 <span>
                     {{ review.text }}
                 </span>
@@ -95,23 +95,23 @@
     <?php if(isset($_SESSION["userId"]) || isset($_SESSION["adminId"])): ?>
         <form class="add_product add_review" action="?page=product_addReview" method="POST">
             <div class="form-group">
-                <span>Name: </span>
+                <span>Имя: </span>
                 <input type="text" name="review[name]" value="<?php echo $_SESSION["userName"] ?>" disabled>
                 <input type="text" name="review[name]" value="<?php echo $_SESSION["userName"] ?>" hidden>
             </div>
 
             <div class="form-group">
-                <label>Email: </label>
+                <label>Почта: </label>
                 <input type="text" name="review[email]" >
             </div>
 
             <div class="form-group">
-                <label>Text: </label>
+                <label>Отзыв: </label>
                 <textarea rows="7" cols="45" name="review[text]"></textarea>
             </div>
 
             <div class="form-group">
-                <span>Rating: </span>
+                <span>Рейтинг: </span>
                 <?php echo $_SESSION["userRating"] ?>
                 <input type="text" name="review[rating]" value="<?php echo $_SESSION["userRating"] ?>" disabled>
                 <input type="text" name="review[rating]" value="<?php echo $_SESSION["userRating"] ?>" hidden>
@@ -120,7 +120,7 @@
             <input type="text" name="review[product_id]" value="<?php echo $this->get('product')->getId() ?>" hidden>
             <input type="text" name="review[customer_id]" value="<?php echo $_SESSION["userId"] ?>" hidden>
 
-            <input  class="btn btn-default"  type="submit" value="Add review"/>
+            <input  class="btn btn-default"  type="submit" value="Добавить отзыв"/>
         </form>
      <?php endif; ?>
 

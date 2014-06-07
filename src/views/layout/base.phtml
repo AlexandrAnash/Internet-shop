@@ -39,7 +39,7 @@
                     <li><a href="?page=admin_login"><i class="fa fa-suitcase fa-3x"></i></a></li>
                     <li><a href="?page=customer_register"><i class="fa fa-sign-in fa-3x sign_up"></i></a></li>
                 </ul>
-                <h3 class="navbar-header">Hello, please log in! </h3>
+                <h3 class="navbar-header">Пожалуйста зарегистрируйтесь! </h3>
             <?php else: ?>
                 <?php if(isset($_SESSION["adminId"])): ?>
                     <ul class="login nav navbar-nav navbar-right btn-side">
@@ -53,7 +53,7 @@
                     </ul>
                     <?php endif; ?>
 
-                <h3 class="navbar-header">Welcome <?php echo($_SESSION["userName"]) ?> </h3>
+                <h3 class="navbar-header">Добро пожаловать <?php echo($_SESSION["userName"]) ?>! </h3>
 
             <?php endif; ?>
 

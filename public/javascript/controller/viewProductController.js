@@ -12,6 +12,23 @@ shopApp.controller('viewProductController', function ($scope) {
         $scope.loadPaginate($scope.allReviews);
         console.log("",document.cookie);
     }
+
+    $scope.loadType = function ( type ) {
+        if (type == 'phone')
+            $scope.typeShow = 'Мобильный телефон';
+        if (type == 'Photo')
+            $scope.typeShow = 'Фотоаппарат';
+        if (type == 'Notepad')
+            $scope.typeShow = 'Планшет';
+        if (type == 'Notebook')
+            $scope.typeShow = 'Ноутбук';
+        if (type == 'TV')
+            $scope.typeShow = 'Телевизор';
+        if (type == 'Complect')
+            $scope.typeShow = 'Комплектующие к ПК';
+        if (type == 'Aksess')
+            $scope.typeShow = 'Аксессуары';
+    }
     $scope.editPage = function(page) {
         $scope.currentPage = page;
     }

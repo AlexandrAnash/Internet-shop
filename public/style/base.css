@@ -19,10 +19,6 @@ body {
     padding-right: 0px !important;
 }
 
-.opacity_header {
-    opacity: 0.97;
-}
-
 .big_size {
     font-size: 45px;
     padding: 5px 15px;
@@ -44,7 +40,6 @@ body {
 
 .login_form {
     width: 40%;
-    text-transform: uppercase;
 }
 .login_form input {
     text-align: center;
@@ -159,10 +154,9 @@ a {
     color: rgb(241, 69, 69);
 }
 .nav_button {
-    margin: auto 12%;
+    margin: auto 5%;
 }
 
 .add_product {
     background-color: #fFFFF0;
-    opacity: 0.85;
 }

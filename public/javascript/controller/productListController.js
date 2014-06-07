@@ -1,6 +1,23 @@
 shopApp.controller('productListController', function ($scope) {
     $scope.allProducts =  [];
     $scope.loadProducts = function (id, name, image, sku, price, desc, qty, type, spec) {
+        console.log("type",type);
+        typeShow = '';
+        if (type == 'phone')
+            typeShow = 'Мобильный телефон';
+        if (type == 'Photo')
+            typeShow = 'Фотоаппарат';
+        if (type == 'Notepad')
+            typeShow = 'Планшет';
+        if (type == 'Notebook')
+            typeShow = 'Ноутбук';
+        if (type == 'TV')
+            typeShow = 'Телевизор';
+        if (type == 'Complect')
+            typeShow = 'Комплектующие к ПК';
+        if (type == 'Aksess')
+            typeShow = 'Аксессуары';
+
         $scope.allProducts.push({
             id           : id,
             name         : name,
@@ -10,7 +27,8 @@ shopApp.controller('productListController', function ($scope) {
             description  : desc,
             qty          : qty,
             type         : type,
-            specialPrice : spec || ''
+            specialPrice : spec || '',
+            typeShow     : typeShow
         });
         $scope.sortProduct = $scope.allProducts;
         $scope.loadPaginate($scope.sortProduct);
@@ -19,7 +37,6 @@ shopApp.controller('productListController', function ($scope) {
 
     $scope.filterSortType = function(type) {
         $scope.sortProduct = [];
-        console.log("type",type);
         for (i =0; i < $scope.allProducts.length; i++) {
             if ($scope.allProducts[i].type == type) {
                 $scope.sortProduct.push($scope.allProducts[i]);

@@ -22,13 +22,13 @@
     <div class="row">
         <div class=" btn-group nav_button">
             <div class="btn btn-default" ng-click="filterSortType('phone')">Мобильные телефоны</div>
-            <div class="btn btn-default" ng-click="filterSortType('Photo')">Photo</div>
-            <div class="btn btn-default" ng-click="filterSortType('Notepad')">Notepad</div>
-            <div class="btn btn-default" ng-click="filterSortType('Notebook')">Notebook</div>
-            <div class="btn btn-default" ng-click="filterSortType('TV')">TV</div>
-            <div class="btn btn-default" ng-click="filterSortType('Complect')">Complect to PC</div>
-            <div class="btn btn-default" ng-click="filterSortType('Aksess')">Aksess</div>
-            <div class="btn btn-default" ng-click="filterSortType('')">No type</div>
+            <div class="btn btn-default" ng-click="filterSortType('Photo')">Фотоаппараты</div>
+            <div class="btn btn-default" ng-click="filterSortType('Notepad')">Планшеты</div>
+            <div class="btn btn-default" ng-click="filterSortType('Notebook')">Ноутбуки</div>
+            <div class="btn btn-default" ng-click="filterSortType('TV')">Телевизоры</div>
+            <div class="btn btn-default" ng-click="filterSortType('Complect')">Комплектующие</div>
+            <div class="btn btn-default" ng-click="filterSortType('Aksess')">Аксессуары</div>
+            <div class="btn btn-default" ng-click="filterSortType('')">Без типа</div>
         </div>
     </div>
 
@@ -55,15 +55,15 @@
                     </div>
                     <div class="row row-body">
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                            <label>Sku: <span>{{product.sku}}</span> </label>
+                            <label>Идентификатор: <span>{{product.sku}}</span> </label>
 
-                            <label>Description: <span>{{product.description}}</span></label>
+                            <label>Описание: <span>{{product.description}}</span></label>
 
-                            <label>Price: <span>{{product.price}}</span></label>
+                            <label>Цена: <span>{{product.price}}</span></label>
 
-                            <label>Type: <span>{{product.type || ' not specified '}}</span></label>
+                            <label>Тип: <span>{{product.typeShow || ' тип не определен '}}</span></label>
 
-                            <label ng-hide="{{product.specialPrice == 0.00}}">Special Price: <span class="special">{{product.specialPrice}}</span></label>
+                            <label ng-hide="{{product.specialPrice == 0.00}}">Специальная цена: <span class="special">{{product.specialPrice}}</span></label>
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@
             </form>
             <?php if(isset($_SESSION["adminId"])): ?>
 
-            <a href="?page=product_edit&product_id={{product.id}}"><i class="fa fa-pencil-square-o"></i>Update {{product.name}}</a>
+            <a href="?page=product_edit&product_id={{product.id}}"><i class="fa fa-pencil-square-o"></i>Обновить {{product.name}}</a>
             <?php endif; ?>
 
         </div>
@@ -94,42 +94,42 @@
     <div class="row">
         <form class="add_product" action="?page=product_add" method="POST">
             <div class="form-group">
-                <input class="form-control" type="text" name="product[name]" placeholder="Product name">
+                <input class="form-control" type="text" name="product[name]" placeholder="Название продукта">
             </div>
 
             <div  class="form-group">
-                <input class="form-control" type="text" name="product[sku]" placeholder="Unique number(sku)">
+                <input class="form-control" type="text" name="product[sku]" placeholder="Идентификатор товарной позиции">
             </div>
 
             <div class="form-group">
-                <input class="form-control" type="text" name="product[price]" placeholder="Price">
+                <input class="form-control" type="text" name="product[price]" placeholder="Цена">
             </div>
 
             <div class="form-group">
-                <textarea class="form-control" type="text" width="200" name="product[description]" placeholder="Description"></textarea>
+                <textarea class="form-control" type="text" width="200" name="product[description]" placeholder="Описание"></textarea>
             </div>
 
             <div class="form-group">
-                <select class="form-control" type="text" width="200" name="product[type_product]" placeholder="Description">
-                    <option value="phone">Mobile phone</option>
-                    <option value="Photo">Сamera</option>
-                    <option value="Notepad">Notepad</option>
-                    <option value="Notebook">Notebook</option>
-                    <option value="TV">TV</option>
-                    <option value="Complect">Complect to PC</option>
-                    <option value="Aksess">Aksess</option>
+                <select class="form-control" type="text" width="200" name="product[type_product]" placeholder="выбирите тип">
+                    <option value="phone">Мобильный телефон</option>
+                    <option value="Photo">Фотоаппараты</option>
+                    <option value="Notepad">Планшеты</option>
+                    <option value="Notebook">Ноутбуки</option>
+                    <option value="TV">Телевизоры</option>
+                    <option value="Complect">Комплектующие для ПК</option>
+                    <option value="Aksess">Аксессуары</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <input class="form-control" type="text" name="product[special_price]" placeholder="Special Price">
+                <input class="form-control" type="text" name="product[special_price]" placeholder="Спец. Цена">
             </div>
 
             <div class="form-group">
-                <input class="form-control" type="text" name="product[image]" placeholder="Load image">
+                <input class="form-control" type="text" name="product[image]" placeholder="загрузите картинку">
             </div>
 
-            <input  class="btn btn-default" type="submit" value="Add product"/>
+            <input  class="btn btn-default" type="submit" value="Добавить продукт"/>
         </form>
     </div>
     <?php endif; ?>
