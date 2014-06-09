@@ -15,7 +15,7 @@
         <?php endforeach; ?>
         <div class="row">
             <div class="control-group">
-                <input class="form-control" type="text" placeholder="filter" ng-model="filterOrder" ng-bind="loadPaginate(filteredItems)"/>
+                <input class="form-control" type="text" placeholder="filter" ng-model="filterOrder" ng-keypress="enterFilterOrder(filteredItems)"/>
             </div>
         </div>
         <div class="row">
@@ -47,7 +47,7 @@
                 </tr>
             </table>
         </div>
-        <div class="row">
+        <div class="row" ng-init="editPage(1)">
             <div ng-if="pages > 1" class=" btn-group" ng-repeat="page in [] | range:pages">
                 <div class="btn btn-default" ng-class="{'active': currentPage-1 === $index }" ng-click="editPage(page+1)" >{{ page + 1  }}</div>
             </div>

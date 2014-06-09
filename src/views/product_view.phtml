@@ -2,11 +2,11 @@
     <div class="products product_view" ng-init="loadType('<?php echo $this->get('product')->getTypeProduct() ?>')">
         <div class="row row-header">
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padding_none height_full">
-                <img class="height_full width_auto" src="<?php echo ($this->get('product')->getImage()) ? $this->get('product')->getImage() : '/images/no_image_available.png';?>" />
+                <img class="width_auto" src="<?php echo ($this->get('product')->getImage()) ? $this->get('product')->getImage() : '/images/no_image_available.png';?>" />
             </div>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 padding_none--right ">
                 <span class="rightBlock big_size color_block_def "><?php echo $this->get('product')->getQty() ?></span>
-                <h3><?php echo $this->get('product')->getName() ?></h3>
+                <h3 class="title title_view"><?php echo $this->get('product')->getName() ?></h3>
             </div>
         </div>
 
@@ -15,7 +15,7 @@
 
                 <label>Идентификатор: <span><?php echo $this->get('product')->getSku() ?></span> </label>
 
-                <label>Описание: <span><?php echo $this->get('product')->getDescription() ?></span></label>
+                <label>Описание: <span class="white-space_view"><?php echo $this->get('product')->getDescription() ?></span></label>
 
                 <label>Цена: <span><?php echo $this->get('product')->getPrice() ?></span></label>
 
@@ -92,7 +92,7 @@
     </div>
 
 
-    <?php if(isset($_SESSION["userId"]) || isset($_SESSION["adminId"])): ?>
+    <?php if(isset($_SESSION["userId"])): ?>
         <form class="add_product add_review" action="?page=product_addReview" method="POST">
             <div class="form-group">
                 <span>Имя: </span>

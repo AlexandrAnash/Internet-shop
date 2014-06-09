@@ -8,22 +8,22 @@
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 padding_none--right ">
                     <span class="rightBlock big_size color_block_def "><?php echo $_quote->getQty() ?></span>
-                    <h3><?php echo $_product->getName() ?></h3>
+                    <h3 class="title"><?php echo $_product->getName() ?></h3>
                 </div>
             </div>
 
             <div class="row row-body">
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 
-                    <label>Sku: <span><?php echo $_product->getSku() ?></span> </label>
+                    <label>Идентификатор: <span><?php echo $_product->getSku() ?></span> </label>
 
-                    <label>Description: <span><?php echo $_product->getDescription() ?></span></label>
+                    <label>Описание: <span><?php echo $_product->getDescription() ?></span></label>
 
-                    <label>Price: <span><?php echo $_product->getPrice() ?></span></label>
+                    <label>Цена: <span class="white-space_view"><?php echo $_product->getPrice() ?></span></label>
 
-                    <label>Type: <span><?php echo ($_product->getTypeProduct()) ? $_product->getTypeProduct() : ' not specified '; ?></span></label>
+                    <label>Тип: <span><?php echo ($_product->getTypeProduct()) ? $_product->getTypeProduct() : ' тип не определен '; ?></span></label>
                     <?php if ($_product->isSpecialPriceApplied()): ?>
-                        <label>Special Price: <span class="special"><?php echo $_product->getSpecialPrice()  ?></span></label>
+                        <label>Специальная цена: <span class="special"><?php echo $_product->getSpecialPrice()  ?></span></label>
                     <?php endif; ?>
                 </div>
             </div>
@@ -57,14 +57,14 @@
             <input type="text" name="quote[count]" value="1" hidden>
     <!--        <input class="form-control" type="text" name="quote[count]" >-->
             <input type="text" name="quote[product_id]" value="<?php echo $_product->getId()?>" hidden>
-            <input class="form-control alert-info" type="submit"  value="Delete" />
+            <input class="form-control alert-info" type="submit"  value="Удалить" />
         </form>
         <?php if($_quote->getQty()>1): ?>
         <form class="width_checkout--bnt--25"  action="?page=quote_delete" method="POST">
             <input type="text" name="quote[count]" value="<?php echo $_quote->getQty() ?>" hidden>
     <!--        <input class="form-control" type="text" name="quote[count]" >-->
             <input type="text" name="quote[product_id]" value="<?php echo $_product->getId()?>" hidden>
-            <input class="form-control alert-danger" type="submit"  value="Delete all" />
+            <input class="form-control alert-danger" type="submit"  value="Удалить все" />
         </form>
         <?php endif ?>
     </div>

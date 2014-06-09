@@ -50,7 +50,7 @@
                         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 padding_none">
                             <span class="rightBlock big_size color_block_def font_20 ">{{product.qty}}</span>
 
-                            <h3>{{product.name}}</h3>
+                            <h3 class="title">{{product.name}}</h3>
                         </div>
                     </div>
                     <div class="row row-body">
@@ -98,11 +98,11 @@
             </div>
 
             <div  class="form-group">
-                <input class="form-control" type="text" name="product[sku]" placeholder="Идентификатор товарной позиции">
+                <input class="form-control" type="text" name="product[sku]" value="10000" placeholder="Идентификатор товарной позиции">
             </div>
 
             <div class="form-group">
-                <input class="form-control" type="text" name="product[price]" placeholder="Цена">
+                <input class="form-control" type="text" name="product[price]" value="15999" placeholder="Цена">
             </div>
 
             <div class="form-group">
@@ -110,7 +110,7 @@
             </div>
 
             <div class="form-group">
-                <select class="form-control" type="text" width="200" name="product[type_product]" placeholder="выбирите тип">
+                <select class="form-control" ng-model="typeSelect" type="text" width="200" name="product[type_product]" placeholder="выбирите тип">
                     <option value="phone">Мобильный телефон</option>
                     <option value="Photo">Фотоаппараты</option>
                     <option value="Notepad">Планшеты</option>
@@ -122,11 +122,11 @@
             </div>
 
             <div class="form-group">
-                <input class="form-control" type="text" name="product[special_price]" placeholder="Спец. Цена">
+                <input class="form-control" type="text" name="product[special_price]" value="10999" placeholder="Спец. Цена">
             </div>
 
             <div class="form-group">
-                <input class="form-control" type="text" name="product[image]" placeholder="загрузите картинку">
+                <input class="form-control" type="text" name="product[image]" value="/images/{{typeSelect}}/.jpg" placeholder="загрузите картинку">
             </div>
 
             <input  class="btn btn-default" type="submit" value="Добавить продукт"/>

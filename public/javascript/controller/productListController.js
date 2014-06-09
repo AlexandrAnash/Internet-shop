@@ -1,7 +1,6 @@
 shopApp.controller('productListController', function ($scope) {
     $scope.allProducts =  [];
     $scope.loadProducts = function (id, name, image, sku, price, desc, qty, type, spec) {
-        console.log("type",type);
         typeShow = '';
         if (type == 'phone')
             typeShow = 'Мобильный телефон';

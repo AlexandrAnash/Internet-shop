@@ -10,10 +10,15 @@ shopApp.controller('orderAdminController', function ($scope) {
             id          : id
         });
         $scope.loadPaginate($scope.allOrders);
-        console.log("Orders", $scope.allOrders);
+    }
+    $scope.enterFilterOrder = function (array) {
+        $scope.loadPaginate(array);
+        $scope.currentPage = 1;
+        console.log("sss",array);
     }
     $scope.editPage = function(page) {
         $scope.currentPage = page;
+        console.log("edit", $scope);
     }
 
 
