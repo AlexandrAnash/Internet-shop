@@ -6,6 +6,7 @@ body {
     background-image: url("/images/background_main_1.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-size: cover;
 }
 .padding_none {
     padding: 0px !important;

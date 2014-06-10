@@ -44,6 +44,10 @@ class Address extends Entity
     {
         return $this->_getData('flat');
     }
+    public function getPhone()
+    {
+        return $this->_getData('phone');
+    }
 
     //public function setData(array $data)
     //{

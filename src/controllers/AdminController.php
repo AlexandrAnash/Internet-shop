@@ -124,6 +124,7 @@ class AdminController
 
         $order->load($_GET['id']);
         $OPCollection->filterByOrder($_GET['id']);
+
         if (isset($_POST['approve'])) {
             $order->setStatus($_POST['approve']);
             $order->save();

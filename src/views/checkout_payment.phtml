@@ -1,5 +1,5 @@
 <h3 class="center-block login_form page-header alert-success padding_add_20px">
-    Payment!
+    Оплата заказа!
 </h3>
 <form class="center-block width_checkout--bnt--50 font_20 padding_add_20px alert-warning" action="/?page=checkout_payment" method="post">
 
@@ -8,10 +8,10 @@
         <div  class="radio">
             <label>
                 <input type="radio" name="method" value="<?php echo $method->getCode() ?>">
-                <?php echo $method->getLabel() ?>
+                <?php echo $method->getLabel() == 'Cash on delivery' ? 'Наложенный платеж' : ''?>
             </label>
         </div>
     <?php endforeach; ?>
 
-    <div><input type="submit" value="Finish"></div>
+    <div><input type="submit" value="Далее"></div>
 </form>

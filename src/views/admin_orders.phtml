@@ -1,6 +1,6 @@
 <div class="orders center-block" ng-controller="orderAdminController" >
     <h3 class="center-block page-header alert-success">
-        Orders!
+        Список заказов!
     </h3>
     <br>
 
@@ -22,27 +22,19 @@
             <table class="table table-condensed table-hover margin_padding_none">
                 <tr>
                     <form name="Email Header" method="post" action="?page=admin_orders">
-                        <th class="active padding_none"><button type="submit" name="sort[number_order]" class="btn btn-default th-btn "  value="<?php echo 1-$this->get('id_sort') ?>">Number order</button></th>
-                        <th class="success padding_none"><button type="submit" name="sort[created_at]" class="btn btn-success th-btn " value="<?php echo 1-$this->get('id_sort') ?>">Date</button></th>
-                        <th class="warning padding_none"><button type="submit" name="sort[grand_total]"  class="btn btn-warning th-btn " value="<?php echo 1-$this->get('id_sort') ?>">Grand total</button></th>
-                        <th class="danger padding_none"><button type="submit" name="sort[status]" class="btn btn-danger th-btn " value="<?php echo 1 - $this->get('id_sort') ?>">Status</button></th>
+                        <th class="active padding_none"><button type="submit" name="sort[number_order]" class="btn btn-default th-btn "  value="<?php echo 1-$this->get('id_sort') ?>">Номер заказа</button></th>
+                        <th class="success padding_none"><button type="submit" name="sort[created_at]" class="btn btn-success th-btn " value="<?php echo 1-$this->get('id_sort') ?>">Дата</button></th>
+                        <th class="warning padding_none"><button type="submit" name="sort[grand_total]"  class="btn btn-warning th-btn " value="<?php echo 1-$this->get('id_sort') ?>">Итоговая цена</button></th>
+                        <th class="danger padding_none"><button type="submit" name="sort[status]" class="btn btn-danger th-btn " value="<?php echo 1 - $this->get('id_sort') ?>">Статус</button></th>
                         <th class="danger padding_none"></th>
                     </form>
-                </tr>
-
-                <tr>
-                    <th class="active">Number order</th>
-                    <th class="success">Date</th>
-                    <th class="warning">Grand total</th>
-                    <th class="danger">Status</th>
-                    <th class="danger"></th>
                 </tr>
 
                 <tr ng-repeat="order in (filteredItems = (allOrders | filter: filterOrder) | startFrom:currentPage*pageSize | limitTo:pageSize )">
                     <td class="active">{{ order.number }}</td>
                     <td class="success">{{ order.date }}</td>
                     <td class="warning">{{ order.grandTotal }}</td>
-                    <td class="danger">{{ order.status }}</td>
+                    <td class="danger">{{ order.status == 'Pending' ? 'В ожидании' : 'Утвержден' }}</td>
                     <td class="danger"><a href="?page=admin_editOrder&id={{ order.id }}"><i class="fa fa-pencil-square-o"></i></a></td>
                 </tr>
             </table>

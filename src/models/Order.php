@@ -90,6 +90,11 @@ class Order extends Entity
         return $this->_getData('flat');
     }
 
+    public function getPhone()
+    {
+        return $this->_getData('phone');
+    }
+
     public function getStatus()
     {
         return $this->_getData('status');
@@ -194,6 +199,7 @@ class Order extends Entity
         $messageContent .= 'street - ' . $this->_getData('street') . '<br>';
         $messageContent .= 'home_number - ' . $this->_getData('home_number') . '<br>';
         $messageContent .= 'flat - ' . $this->_getData('flat') . '<br>';
+        $messageContent .= 'phone - ' . $this->_getData('phone') . '<br>';
         $messageContent .= "---------------------------------------<br>";
         $messageContent .= "</div>";
         $messageContent .= 'Results by order:<br>';
@@ -216,8 +222,8 @@ class Order extends Entity
 //      $body = new MimeMessage();
 //      $body->setParts(array($html));
 //     $message = new Message();
-//     $message->addTo('probnik012@gmail.com')
-//         ->addFrom('probnik012@gmail.com')
+//     $message->addTo('alexanash92@gmail.com')
+//         ->addFrom('alexanash92@gmail.com')
 //         ->setSubject('Greetings and Salutations!')
 //         ->setBody($body);
 //
@@ -228,8 +234,8 @@ class Order extends Entity
 //         'port'              => '587',
 //         'connection_class'  => 'login',
 //         'connection_config' => array(
-//             'username' => 'probnik012@gmail.com',
-//             'password' => 'probnik123qweasd',
+//             'username' => 'alexanash92@gmail.com',
+//             'password' => 'Gfhjkm123',
 //             'ssl' => 'tls'
 //         ),
 //     ));

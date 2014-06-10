@@ -1,26 +1,26 @@
 <h3 class="center-block login_form page-header alert-success padding_add_20px">
-    Order!
+    Заказ!
 </h3>
 <form class="center-block login_form font_20 padding_add_20px alert-info" action="/?page=checkout_order" method="post">
 
     <div class="form-group">
         <label class="form-control">
-            Price of the products: <?php echo $this->get('subtotal') ?>$
+            Цена за выбранные товары: <?php echo $this->get('subtotal') ?>$
         </label>
     </div>
 
     <div class="form-group">
         <label class="form-control">
-            Total price of the shipping: <?php echo $this->get('shipping') ?>$
+            Цена за доставку: <?php echo $this->get('shipping') ?>$
         </label>
     </div>
 
     <div class="form-group">
         <label class="form-control">
-            Total price: <?php echo $this->get('grand_total') ?>$
+            Итоговая цена: <?php echo $this->get('grand_total') ?>$
         </label>
     </div>
 
 
-    <div><input class="btn btn-success" type="submit" value="All right!"></div>
+    <div><input class="btn btn-success" type="submit" value="Все верно. Оформить заказ!"></div>
 </form>

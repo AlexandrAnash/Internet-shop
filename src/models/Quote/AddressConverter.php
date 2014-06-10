@@ -32,7 +32,8 @@ class AddressConverter
                 'postal_code' => $address->getPostalCode(),
                 'street' => $address->getStreet(),
                 'home_number' => $address->getHomeNumber(),
-                'flat' => $address->getFlat()
+                'flat' => $address->getFlat(),
+                'phone' => $address->getPhone()
             ]
         );
     }

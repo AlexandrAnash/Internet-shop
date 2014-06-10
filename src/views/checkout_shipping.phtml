@@ -1,5 +1,5 @@
 <h3 class="center-block login_form page-header alert-success padding_add_20px">
-    Shipping!
+    Перевозка груза!
 </h3>
 
 
@@ -9,10 +9,10 @@
         <div class="radio">
             <label class="">
                 <input type="radio" name="method" value="<?php echo $method['code'] ?>">
-                <?php echo $method['price'] ?>$ (<?php echo $method['label'] ?>)
+                <?php echo $method['price'] ?>$ (<?php if($method['label'] == "Table Rate") { echo "стоимость в Вашем регионе"; } else if ($method['label'] == "Fixed") { echo "Фиксированная"; }?>)
             </label>
         </div>
     <?php endforeach; ?>
 
-    <div class="form-group"><input class="btn btn-success" type="submit" value="Next"></div>
+    <div class="form-group"><input class="btn btn-success" type="submit" value="Далее"></div>
 </form>

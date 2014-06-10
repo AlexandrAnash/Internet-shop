@@ -1,31 +1,35 @@
 <div class="orders center-block" >
     <h3 class="center-block page-header alert-success">
-        Edit order!
+        Редактирование заказа!
     </h3>
     <div class="row">
         <table class="table table-condensed table-hover margin_padding_none">
         <?php $order = $this->get('orders') ?>
             <tr>
                 <form name="Email Header" method="post" action="?page=admin_orders">
-                    <th class="warning">Number order</th>
-                    <th class="warning">Status</th>
-                    <th class="warning">Date</th>
-                    <th class="warning">City</th>
-                    <th class="warning">Region</th>
-                    <th class="warning">Postal Code</th>
-                    <th class="warning">Street</th>
-                    <th class="warning">Flat</th>
+                    <th class="warning">Номер заказа</th>
+                    <th class="warning">Статус</th>
+                    <th class="warning">Дата</th>
+                    <th class="warning">Город</th>
+                    <th class="warning">Регион</th>
+                    <th class="warning">Почтовый индекс</th>
+                    <th class="warning">Улица</th>
+                    <th class="warning">Дом</th>
+                    <th class="warning">Квартира</th>
+                    <th class="warning">Контактный телефон</th>
                 </form>
             </tr>
             <tr>
                 <td class="warning"><?php echo $order->getNumber(); ?></td>
-                <td class="warning"><?php echo $order->getStatus(); ?></td>
+                <td class="warning"><?php echo $order->getStatus() == 'Pending' ? "В ожидании" : "Утвержден"; ?></td>
                 <td class="warning"><?php echo $order->getDate(); ?></td>
                 <td class="warning"><?php echo $order->getCity(); ?></td>
                 <td class="warning"><?php echo $order->getRegion(); ?></td>
                 <td class="warning"><?php echo $order->getPostalCode(); ?></td>
                 <td class="warning"><?php echo $order->getStreet(); ?></td>
+                <td class="warning"><?php echo $order->getHomeNumber(); ?></td>
                 <td class="warning"><?php echo $order->getFlat(); ?></td>
+                <td class="warning"><?php echo $order->getPhone(); ?></td>
 
             </tr>
             </table>
@@ -36,18 +40,18 @@
 
             <tr>
                 <form name="Email Header" method="post" action="?page=admin_orders">
-                    <th class="success">Customer name</th>
-                    <th class="success">Shipping Method</th>
-                    <th class="success">Payment Method</th>
-                    <th class="success">Grand total</th>
-                    <th class="success">Distance</th>
-                    <th class="success">Duration</th>
+                    <th class="success">Покупатель</th>
+                    <th class="success">Способ доставки</th>
+                    <th class="success">Способ оплаты</th>
+                    <th class="success">Общий итог</th>
+                    <th class="success">Дистанция</th>
+                    <th class="success">Приблизительное время</th>
                 </form>
             </tr>
             <tr>
                 <td class="success"><?php echo $order->getCustomer(); ?></td>
-                <td class="success"><?php echo $order->getShippingMethod(); ?></td>
-                <td class="success"><?php echo $order->getPaymentMethod(); ?></td>
+                <td class="success"><?php if($order->getShippingMethod() == "Table Rate") { echo "по стоимости в регионе"; } else if ($order->getShippingMethod() == "fixed") { echo "Фиксированная"; }?></td>
+                <td class="success"><?php echo $order->getPaymentMethod() == 'Cash on delivery' ? 'Наложенный платеж' : ''; ?></td>
                 <td class="success"><?php echo $order->getGrandTotal(); ?></td>
                 <td class="success"><?php echo $order->getDistance(); ?></td>
                 <td class="success"><?php echo $order->getDuration(); ?></td>
@@ -58,10 +62,10 @@
             <table class="table table-condensed table-hover margin_padding_none">
 
                 <tr>
-                    <th class="danger">Name Product</th>
-                    <th class="danger">Sku</th>
-                    <th class="danger">Count</th>
-                    <th class="danger">Price</th>
+                    <th class="danger">Название товара</th>
+                    <th class="danger">Идентификатор</th>
+                    <th class="danger">Количество</th>
+                    <th class="danger">Цена</th>
                 </tr>
                 <?php foreach ($this->get('OPCollection') as $itemProduct): ?>
                 <tr>
@@ -75,7 +79,7 @@
         </div>
     <div class="row">
         <form name="Email Header" method="post" action="?page=admin_editOrder&id=<?php echo $order->getId()?>">
-            <input type="submit" class="btn btn-default width_full" name="approve" value="Approve">
+            <input type="submit" class="btn btn-default width_full" name="approve" value="Утвердить">
         </form>
 
 </div>

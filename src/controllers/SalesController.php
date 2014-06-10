@@ -56,7 +56,7 @@ class SalesController
             'store'         => $s,
             'start_address' => $routes[0]->legs[0]->start_address,
             'end_address'   => $routes[0]->legs[0]->end_address,
-            'duration'      => $routes[0]->legs[0]->duration->text,
+            'duration'      => "3 day, " . $routes[0]->legs[0]->duration->text,
             'distance'      => (int)str_replace(',','',split(' ', $routes[0]->legs[0]->distance->text)[0])
         ];
     }
