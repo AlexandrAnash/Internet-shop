@@ -22,7 +22,7 @@
                     <label>Цена: <span class="white-space_view"><?php echo $_product->getPrice() ?></span></label>
 
                     <label>Тип: <span><?php echo ($_product->getTypeProduct()) ? $_product->getTypeProduct() : ' тип не определен '; ?></span></label>
-                    <?php if ($_product->isSpecialPriceApplied()): ?>
+                    <?php if ($_product->getSpecialPrice() > 0): ?>
                         <label>Специальная цена: <span class="special"><?php echo $_product->getSpecialPrice()  ?></span></label>
                     <?php endif; ?>
                 </div>

@@ -109,6 +109,10 @@ class Order extends Entity
     {
         return $this->_getData('duration');
     }
+    public function getAddressStoreId()
+    {
+        return $this->_getData('address_store_id');
+    }
 // </editor-fold>
 
 
@@ -150,6 +154,10 @@ class Order extends Entity
     {
         $this->_data['duration'] = $data;
     }
+    public function setAddressStoreId($data)
+    {
+        $this->_data['address_store_id'] = $data;
+    }
 
 
     public function sendEmail($dist)
@@ -162,7 +170,7 @@ class Order extends Entity
 
         if ($this->_getData('customer_name'))
         $messageContent .= "Sent a message " . $this->_getData('customer_name') . '<br>';
-    else
+        else
         $messageContent .= "Sent a message " . "Guest" . '<br>' ;
 
         $messageContent .= "<br>";
@@ -187,6 +195,7 @@ class Order extends Entity
             $messageContent .= "---------------------------------------<br>";
             $this->setDistance($dist[$key]['distance']);
             $this->setDuration($dist[$key]['duration']);
+            $this->setAddressStoreId($dist[$key]["store"]->getAddressId());
         }
         $messageContent .= "</div>";
 

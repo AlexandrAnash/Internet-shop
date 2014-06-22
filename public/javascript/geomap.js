@@ -10,6 +10,8 @@ function initialize() {
         address: "Taganrog"
     }
     var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+    var storeAddress = document.getElementById('cityAddressStore').value;
+    var customerAddress = document.getElementById('cityAddressCustomer').value;
     var myOptions = {
         zoom: 8,
         center: myLatlng,
@@ -17,23 +19,21 @@ function initialize() {
     }
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     geocoder = new google.maps.Geocoder();
-    document.write(document.cookie);
-
-//        geocoder.geocode(GeocoderRequest, function(GeocoderResult, GeocoderStatus){
-//            if (status == google.maps.GeocoderStatus.OK)
-//            console.log("GeocoerResult", GeocoderResult);
-//            console.log("GeocoderStatus", GeocoderStatus);
-////        })
-//    addMarker("Taganrog");
-//    addMarker("Moscow");
+    geocoder.geocode(GeocoderRequest, function(GeocoderResult, GeocoderStatus){
+        if (status == google.maps.GeocoderStatus.OK)
+        console.log("GeocoerResult", GeocoderResult);
+        console.log("GeocoderStatus", GeocoderStatus);
+    })
+    addMarker(customerAddress, true);
+    addMarker(storeAddress, false);
 
 }
 function calculateDistances() {
     var service = new google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
         {
-            origins: ["Ростов-на-дону"],
-            destinations: ["Москва", "Таганрог", "Воронеж"],
+//            origins: ["Росто?в-на-дону"],
+//            destinations: ["Москва", "Таганрог", "Воронеж"],
             travelMode: google.maps.TravelMode.DRIVING,
             unitSystem: google.maps.UnitSystem.METRIC,
             avoidHighways: false,
@@ -48,6 +48,7 @@ function callback(response, status) {
         var origins = response.originAddresses;
         var destinations = response.destinationAddresses;
         var outputDiv = document.getElementById('outputDiv');
+        console.log(outputDiv);
         var outputServer = [];
         outputDiv.innerHTML = '';
         deleteOverlays();

@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/javascript/geomap.js"></script>
+
 <div class="orders center-block" >
     <h3 class="center-block page-header alert-success">
         Редактирование заказа!
@@ -5,6 +7,8 @@
     <div class="row">
         <table class="table table-condensed table-hover margin_padding_none">
         <?php $order = $this->get('orders') ?>
+        <?php $storeCity = $this->get('storeCity') ?>
+
             <tr>
                 <form name="Email Header" method="post" action="?page=admin_orders">
                     <th class="warning">Номер заказа</th>
@@ -49,12 +53,13 @@
                 </form>
             </tr>
             <tr>
-                <td class="success"><?php echo $order->getCustomer(); ?></td>
-                <td class="success"><?php if($order->getShippingMethod() == "Table Rate") { echo "по стоимости в регионе"; } else if ($order->getShippingMethod() == "fixed") { echo "Фиксированная"; }?></td>
+                <td class="success"><?php if($order->getCustomer() == null) echo "Гость"; else echo $order->getCustomer();?></td>
+                <td class="success"><?php if($order->getShippingMethod() == "Table rate") { echo "по стоимости в регионе"; } else if ($order->getShippingMethod() == "fixed") { echo "Фиксированная"; }?></td>
                 <td class="success"><?php echo $order->getPaymentMethod() == 'Cash on delivery' ? 'Наложенный платеж' : ''; ?></td>
                 <td class="success"><?php echo $order->getGrandTotal(); ?></td>
                 <td class="success"><?php echo $order->getDistance(); ?></td>
                 <td class="success"><?php echo $order->getDuration(); ?></td>
+                <td class="success"><?php echo $storeCity->getName(); ?></td>
             </tr>
             </table>
         </div>
@@ -81,5 +86,14 @@
         <form name="Email Header" method="post" action="?page=admin_editOrder&id=<?php echo $order->getId()?>">
             <input type="submit" class="btn btn-default width_full" name="approve" value="Утвердить">
         </form>
+    </div>
+    <input type="text" id="cityAddressCustomer" value="<?php echo $order->getCity(); ?>" hidden=""/>
+    <input type="text" id="cityAddressStore" value="<?php echo $storeCity->getName() ?>" hidden=""/>
 
-</div>
+
+<!--    <input type="text" class="btn btn-default width_full" value="Показать карту" ng-click="isMap = !isMap">-->
+    <div style="width:800px; height: 350px;" >
+    <div id="map_canvas" style="width:800px; height: 350px;"></div>
+
+    <div id="outputDiv"></div>
+    </div>

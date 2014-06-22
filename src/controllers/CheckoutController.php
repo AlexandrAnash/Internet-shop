@@ -96,6 +96,7 @@ class CheckoutController
                 ->toOrder($quote, $order);
             $order->sendEmail($dist);
             $order->save();
+            header("Location: /?page=product_list");
         } else {
             return $this->_di->get('View', [
                 'template' => 'checkout_order',

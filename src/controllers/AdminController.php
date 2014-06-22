@@ -120,9 +120,17 @@ class AdminController
     public function editOrderAction()
     {
         $order = $this->_di->get('Order');
+        $address = $this->_di->get('Address');
+        $city = $this->_di->get('City');
+        $cityResource = $this->_di->get('ResourceCollection', ['table' => new \App\Model\Resource\Table\City]);
+        $cityCollection = $this->_di->get('CityCollection', ['resource' => $cityResource, 'cityPrototype' => $city]);
+        $region = $this->_di->get('Region');
+        $regionResource = $this->_di->get('ResourceCollection', ['table' => new \App\Model\Resource\Table\Region]);
+        $regionCollection = $this->_di->get('RegionCollection', ['resource' => $regionResource, 'regionPrototype' => $region]);
         $OPCollection = $this->_di->get('OrderProductCollection');
-
         $order->load($_GET['id']);
+        $address->load($order->getAddressStoreId());
+        $city->load($address->getCityId());
         $OPCollection->filterByOrder($_GET['id']);
 
         if (isset($_POST['approve'])) {
@@ -135,6 +143,7 @@ class AdminController
              'params' => [
                 'orders' => $order,
                 'OPCollection' => $OPCollection,
+                'storeCity' => $city,
                 ]
             ]);
         }
